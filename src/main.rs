@@ -19,21 +19,16 @@ async fn fetch_rss(url: &str) -> Result<Channel, reqwest::Error> {
     Ok(channel)
 }
 
-async fn post_to_mastodon(token: &str, url: &str, content: &str) -> Result<(), reqwest::Error> {
-    let client = reqwest::Client::new();
-    client
-        .post(url)
-        .bearer_auth(token)
-        .form(&[("status", content)])
-        .send()
-        .await?;
-    Ok(())
-}
-
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let file = File::open("config.yaml")?;
+    let file = File::open("local.yml")?;
     let config: Config = serde_yaml::from_reader(file)?;
+    let client = megalodon::generator(
+        megalodon::SNS::Mastodon,
+        config.mastodon_url,
+        Some(config.mastodon_token),
+        None,
+    );
 
     loop {
         let channel = fetch_rss(&config.rss_url).await?;
@@ -44,7 +39,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 item.title().unwrap_or(""),
                 item.link().unwrap_or("")
             );
-            post_to_mastodon(&config.mastodon_token, &config.mastodon_url, &content).await?;
+            client.post_status(content, None).await?;
         }
         sleep(Duration::from_secs(3600)).await; // 1時間毎にチェック
     }
