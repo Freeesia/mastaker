@@ -1,0 +1,4 @@
+/.devcontainer/
+/.vscode/
+/target/
+local.yml
