@@ -5,9 +5,7 @@ mod ext_trait;
 use average_updater::AverageUpdater;
 use chrono::Duration;
 use megalodon::megalodon::{PostStatusOutput, PostStatusInputOptions};
-use once_cell::sync::Lazy;
 use posted_item::Entity as PostedItem;
-use regex::Regex;
 use reqwest;
 use rss::Channel;
 use sea_orm::*;
@@ -15,7 +13,6 @@ use sea_orm_migration::SchemaManager;
 use serde_derive::{Deserialize, Serialize};
 use serde_yaml;
 use std::{env, fs::File};
-use string_builder::Builder as StringBuilder;
 
 use crate::ext_trait::*;
 
@@ -34,9 +31,6 @@ struct Feed {
 const DATABASE_URL_ENV: &str = "DATABASE_URL";
 const FEED_CONFIG_PATH_ENV: &str = "FEED_CONFIG_PATH";
 const IS_DRY_RUN_ENV: &str = "IS_DRY_RUN";
-
-static TAG_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"[^\w]").unwrap()); // 単語文字以外の文字にマッチする正規表現
-
 
 fn load_config() -> Result<Config, Box<dyn std::error::Error>> {
     let path =
@@ -111,27 +105,11 @@ async fn process_feed(
             continue;
         }
         updater.set_last_title(Some(title));
-        let mut b = StringBuilder::default();
-        if let Some(t) = item.title() {
-            b.append_with_line(t);
-        }
-        if let Some(l) = item.link() {
-            b.append_with_line(l);
-        }
-        // 空行を入れるとMastodonで見やすくなる
-        b.append_line();
-        b.append(
-            item.categories()
-                .iter()
-                .map(|c| format!("#{}", TAG_RE.replace_all(&c.name(), "_")))
-                .collect::<Vec<String>>()
-                .join(" "),
-        );
-        let content = b.string()?;
+        let status = item.to_status();
         let pub_date = item.pub_date_utc();
-        println!("{} -> \n{}", feed.url, content);
+        println!("{} -> \n{}", feed.url, status);
         if !*is_dry_run {
-            let res = client.post_status(content, Some(
+            let res = client.post_status(status, Some(
                 &PostStatusInputOptions {
                     // テスト垢投稿用
                     // visibility: Some(megalodon::entities::status::StatusVisibility::Unlisted),
