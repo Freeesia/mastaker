@@ -21,15 +21,6 @@ impl AverageUpdater {
     }
 
     // 新しい更新の時間を基に平均更新間隔を更新
-    pub fn update_from_rfc2822(&mut self, new_time: &str) {
-        self.update(
-            DateTime::parse_from_rfc2822(new_time)
-                .unwrap()
-                .with_timezone(&Utc),
-        );
-    }
-
-    // 新しい更新の時間を基に平均更新間隔を更新
     pub fn update(&mut self, new_time: DateTime<Utc>) {
         if let Some(last) = self.last_time {
             let diff = new_time - last;

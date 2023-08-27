@@ -15,7 +15,14 @@
 			"target": "/usr/local/cargo",
 			"type": "volume"
 		}
-	]
+	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"redhat.vscode-yaml"
+			]
+		}
+	}
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},

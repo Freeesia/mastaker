@@ -11,3 +11,5 @@
 .history/
 
 local.yml
+.env
+db.sqlite3
