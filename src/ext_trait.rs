@@ -1,4 +1,4 @@
-use chrono::{Duration, DateTime, Utc};
+use chrono::{DateTime, Duration, Utc};
 use once_cell::sync::Lazy;
 use regex::Regex;
 
@@ -47,31 +47,32 @@ impl StringBuilderExt for string_builder::Builder {
 }
 
 pub trait ItemExt {
-    fn pub_date_utc(&self) -> DateTime<Utc>;
+    fn record_id(&self) -> String;
+    fn pub_date_utc(&self) -> Option<DateTime<Utc>>;
     fn to_status(&self) -> String;
 }
 
-impl ItemExt for rss::Item {
-    fn pub_date_utc(&self) -> DateTime<Utc> {
-        let pub_date_str = self.pub_date().unwrap();
-        DateTime::parse_from_rfc2822(pub_date_str)
-            .unwrap()
-            .with_timezone(&Utc)
+impl ItemExt for feed_rs::model::Entry {
+    fn record_id(&self) -> String {
+        self.id.clone()
+    }
+    fn pub_date_utc(&self) -> Option<DateTime<Utc>> {
+        self.published
     }
     fn to_status(&self) -> String {
         let mut b = string_builder::Builder::default();
-        if let Some(t) = self.title() {
-            b.append_with_line(t);
+        if let Some(t) = &self.title {
+            b.append_with_line(t.content.as_str());
         }
-        if let Some(l) = self.link() {
-            b.append_with_line(l);
+        for link in &self.links {
+            b.append_with_line(link.href.as_str());
         }
         // 空行を入れるとMastodonで見やすくなる
         b.append_line();
         b.append(
-            self.categories()
+            self.categories
                 .iter()
-                .map(|c| format!("#{}", TAG_RE.replace_all(&c.name(), "_")))
+                .map(|c| format!("#{}", TAG_RE.replace_all(&c.label.as_ref().unwrap_or(&c.term), "_")))
                 .collect::<Vec<String>>()
                 .join(" "),
         );
