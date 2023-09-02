@@ -1170,6 +1170,7 @@ dependencies = [
  "getset",
  "megalodon",
  "once_cell",
+ "rand",
  "regex",
  "reqwest",
  "sea-orm",

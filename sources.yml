@@ -1,0 +1,4116 @@
+sources: 
+- id: nintendo
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - nintendo
+  source: 
+    feed: "https://www.nintendo.co.jp/news/whatsnew.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: 4gamer
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - 4gamer
+  source: 
+    feed: "https://www.4gamer.net/rss/news_topics.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+- id: akiba_pc
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - akiba_pc
+  source: 
+    feed: "https://akiba-pc.watch.impress.co.jp/data/rss/1.0/ah/feed.rdf"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: impress
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - impress
+  source: 
+    feed: "https://pc.watch.impress.co.jp/data/rss/1.0/pcw/feed.rdf"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: famitsu
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - famitsu
+  source: 
+    feed: "https://www.famitsu.com/rss/fcom_all.rdf"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: "//a[@class='article-header__category-link']"
+- id: denfaminicogamer
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - denfaminicogamer
+  source: 
+    feed: "https://news.denfaminicogamer.jp/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: publickey1
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - publickey1
+  source: 
+    feed: "https://www.publickey1.jp/atom.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: inside_games
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - inside_games
+  source: 
+    feed: "https://www.inside-games.jp/rss20/index.rdf"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: gamebusiness
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - gamebusiness
+  source: 
+    feed: "https://www.gamebusiness.jp/rss20/index.rdf"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: automaton_media
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - automaton_media
+  source: 
+    feed: "https://automaton-media.com/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: qiita
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - qiita
+  source: 
+    feed: "https://qiita.com/popular-items/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: ndw
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - ndw
+  source: 
+    feed: "https://www.ndw.jp/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: ascii
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - ascii
+  source: 
+    feed: "https://ascii.jp/rss.xml"
+    remote_keyword: 
+      enable: true
+      ignore: 
+      - アスキー
+      - ASCII_jp
+      - 角川アスキー総合研究所
+      replace_rules: null
+    remote_xpath_tags: null
+- id: ufcpp
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - ufcpp
+  source: 
+    feed: "https://ufcpp.net/rssblog"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: cgworld
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - cgworld
+  source: 
+    feed: "https://cgworld.jp/atom.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: gamesindustry
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - gamesindustry
+  source: 
+    feed: "https://jp.gamesindustry.biz/rss/index.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: playstation
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - playstation
+  source: 
+    feed: "https://blog.ja.playstation.com/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: gamebiz
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - gamebiz
+  source: 
+    feed: "https://gamebiz.jp/feed.rss"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: square_enix
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - square_enix
+  source: 
+    feed: "https://blog.jp.square-enix.com/iteng-blog/index.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: developers
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - developers
+  source: 
+    feed: "https://developers.cyberagent.co.jp/blog/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: animeanime
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - animeanime
+  source: 
+    feed: "https://animeanime.jp/rss20/index.rdf"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: microsoft
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - microsoft
+  source: 
+    feed: "https://devblogs.microsoft.com/dotnet/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: futuregamereleases
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - futuregamereleases
+  source: 
+    feed: "https://www.futuregamereleases.com/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: "//span[@class='tagcloud']/a"
+- id: ycombinator
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - ycombinator
+  source: 
+    feed: "https://news.ycombinator.com/rss"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: gamespark
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - gamespark
+  source: 
+    feed: "https://www.gamespark.jp/rss20/index.rdf"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: moguravr
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - moguravr
+  source: 
+    feed: "https://www.moguravr.com/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: "//main/aside[contains(@class,'mg-opt-article-tags')]/a"
+- id: gihyo
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - gihyo
+  source: 
+    feed: "https://gihyo.jp/feed/rss1"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: spike_chunsoft
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - spike_chunsoft
+  source: 
+    feed: "https://www.spike-chunsoft.co.jp/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: forest_watch_impress
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - forest_watch_impress
+  source: 
+    feed: "https://forest.watch.impress.co.jp/data/rss/1.0/wf/feed.rdf"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_NintendoJP
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_NintendoJP
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCkH3CcMfqww9RsZvPRPkAJA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_atlustube
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_atlustube
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCDKOsemhPLrK4JnsZqkxHLA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_sora_sakurai_jp
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_sora_sakurai_jp
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UC5CTV3JSdrlo5Pa42QkK8SA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_famitsutube
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_famitsutube
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCtPyU9cJgvvgH03PQKgaucA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_PlayStationJapan
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_PlayStationJapan
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCaghC0OZwAdidMrbvxkcrPg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_wamweb
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_wamweb
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCeJYDunL9xZtmczAP9AGmFA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_DosparaChannel
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_DosparaChannel
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCdb014rr_Yr-JUfDRmOaI_A"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_macrossch2259
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_macrossch2259
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCKeM8HXpwR0qc0RtH0GKyMg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_capcom
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_capcom
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCyuEAZQzRqhcaLZvQd9ZUNA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_gamesampo_yosomi
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_gamesampo_yosomi
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCcTuSuH_yELJQYU6YZUHsAA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_dengekionline
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_dengekionline
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCQb6W0vblp5ewU75watnqQQ"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_GameMakersJP
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_GameMakersJP
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCj8sQfNGcnMcEEgQ1ajaarw"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_CygamesJA
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_CygamesJA
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCU3MNBzIn5j2j38OpYdSkog"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: feedly_i_subscription_feed2Fht
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - feedly_i_subscription_feed2Fht
+  source: 
+    feed: "http://blog.feedly.com/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: nazology
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - nazology
+  source: 
+    feed: "https://nazology.net/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: littlebeans
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - littlebeans
+  source: 
+    feed: "https://little-beans.net/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: gigafree
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - gigafree
+  source: 
+    feed: "https://www.gigafree.net/index.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: av_watch_impress
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - av_watch_impress
+  source: 
+    feed: "https://av.watch.impress.co.jp/data/rss/1.0/avw/feed.rdf"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: omocoro
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - omocoro
+  source: 
+    feed: "https://omocoro.jp/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: finalfantasyxiv_lodestone
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - finalfantasyxiv_lodestone
+  source: 
+    feed: "https://jp.finalfantasyxiv.com/lodestone/news/news.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: finalfantasyxiv_lodestone_2
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - finalfantasyxiv_lodestone
+  source: 
+    feed: "https://jp.finalfantasyxiv.com/lodestone/news/topics.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: locdandloaded
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - locdandloaded
+  source: 
+    feed: "https://locdandloaded.net/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: panora_tokyo
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - panora_tokyo
+  source: 
+    feed: "https://panora.tokyo/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: itmedia_news
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - itmedia_news
+  source: 
+    feed: "https://rss.itmedia.co.jp/rss/2.0/news_bursts.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: dev_classmethod
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - dev_classmethod
+  source: 
+    feed: "https://dev.classmethod.jp/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: ktai_watch_impress
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - ktai_watch_impress
+  source: 
+    feed: "https://k-tai.watch.impress.co.jp/data/rss/1.0/ktw/feed.rdf"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: smhn
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - smhn
+  source: 
+    feed: "https://smhn.info/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_cedecyoutube5093
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_cedecyoutube5093
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCmHaPXvwn9_4pMNAV6ewgoA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_gccx20th
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_gccx20th
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCFBkdFQ3iYvh882EjPnreYw"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_Lantis
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_Lantis
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCpRh2xmGtaVhFVuyCB271pw"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_squareenix
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_squareenix
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UC6SmH9mR82nj28_NNg_rZvA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: doope
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - doope
+  source: 
+    feed: "https://doope.jp/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: mypotatogames
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - mypotatogames
+  source: 
+    feed: "https://mypotatogames.com/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: internet_watch_impress
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - internet_watch_impress
+  source: 
+    feed: "https://internet.watch.impress.co.jp/data/rss/1.0/iw/feed.rdf"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: applech2
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - applech2
+  source: 
+    feed: "https://applech2.com/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: amass
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - amass
+  source: 
+    feed: "https://amass.jp/rss/new"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: otsukishoten_news
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - otsukishoten_news
+  source: 
+    feed: "http://www.otsukishoten.co.jp/rss/news/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: nmejp
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - nmejp
+  source: 
+    feed: "https://nme-jp.com/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: kadensha_news
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - kadensha_news
+  source: 
+    feed: "https://www.kadensha.net/rss/news/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: lifelink_or
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - lifelink_or
+  source: 
+    feed: "https://lifelink.or.jp/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: nakasecond_livedoor_biz
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - nakasecond_livedoor_biz
+  source: 
+    feed: "http://nakasecond.livedoor.biz/index.rdf"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: monchicon_jugem
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - monchicon_jugem
+  source: 
+    feed: "http://monchicon.jugem.jp/?mode=rss"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: gigazine
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - gigazine
+  source: 
+    feed: "https://gigazine.net/news/rss_2.0/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: watch_impress
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - watch_impress
+  source: 
+    feed: "https://www.watch.impress.co.jp/data/rss/1.0/ipw/feed.rdf"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: hookuprecords_livezanmai
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - hookuprecords_livezanmai
+  source: 
+    feed: "https://www.hookuprecords.com/livezanmai/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: calendarsenyou_blog_fc2
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - calendarsenyou_blog_fc2
+  source: 
+    feed: "http://calendarsenyou.blog.fc2.com/?xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: dawaflake_exblog
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - dawaflake_exblog
+  source: 
+    feed: "https://dawaflake.exblog.jp/index.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: news_yahoo_media_tenki
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - news_yahoo_media_tenki
+  source: 
+    feed: "https://news.yahoo.co.jp/rss/media/tenki/all.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_PokemonCoJp
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_PokemonCoJp
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UC_SI1j1d8vJo_rYMV5o_dRg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: news_yahoo_media_rcg
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - news_yahoo_media_rcg
+  source: 
+    feed: "https://news.yahoo.co.jp/rss/media/rcg/all.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_user_dommune
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_user_dommune
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UC06WalpLcwTx-0ZVgglMc5Q"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_BBCNewsJapan
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_BBCNewsJapan
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCCcey5CP5GDZeom987gqTdg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_lylehsaxon
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_lylehsaxon
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCBkPgZh2RASVMn_fHh0TvTQ"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_poponpgunyanjiji
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_poponpgunyanjiji
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UC8q4zg4McLWSfaguwg2HZaQ"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_tbsnewsdig
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_tbsnewsdig
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UC6AG81pAkf6Lbi_1VC5NmPA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_themidnightspecialtvsh
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_themidnightspecialtvsh
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCNF4M2QUP0lpSc32MOP2DZw"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_arteconcert
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_arteconcert
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UC-smeLB9AnOTeypr1YyjJ3A"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_TheEdSullivanShow
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_TheEdSullivanShow
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCDUNe-NZaknJOGyulc4Ohvg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_ExploreLiveNatureCams
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_ExploreLiveNatureCams
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UC-2KSeUU5SMCX6XLRD-AEvw"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_MASAYOSHIKUMEGAWA
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_MASAYOSHIKUMEGAWA
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCemRkHqzjN0IgMCiJlC_Ckg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_userzo2vd2fs6j
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_userzo2vd2fs6j
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UC03glnmTlO_qyPD3SPwpjHg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_daviddeanburkhart
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_daviddeanburkhart
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCNYJOAz1J80HEJy2HSM772Q"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_ScottishTeeVee
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_ScottishTeeVee
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCbQgqodL8yDcIRVMuDQWRpg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_FruitierThanThou
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_FruitierThanThou
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCc7Fcy2yEASuOKzY9gHo5FA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_NHK
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_NHK
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCip8ve30-AoX2y2OtAAmqFA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_DJMag
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_DJMag
+  source: 
+    feed: "https://www.youtube.com/feeds/videos.xml?channel_id=UCJEKlziKdxoos1qbptjGgLg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: technoedge
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - technoedge
+  source: 
+    feed: "https://www.techno-edge.net/rss20/index.rdf"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_McGuffin2017
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_McGuffin2017
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UC5CXd3yvCNfePkAbxeianDQ"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_WIREDjp
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_WIREDjp
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UC7rWtV-JngmNWe01-zkI21A"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_KEENJapan
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_KEENJapan
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCXt35wmxKz6G8k_TTal5j3g"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_bunshun_online
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_bunshun_online
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCJPEq-fDPYkJw_PHTv_zuiA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_kexp
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_kexp
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UC3I2GFN_F8WudD_2jUZbojA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_BBCMusic
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_BBCMusic
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCZtDUmC3W7j25XHZWFT_XgQ"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_usadapekora
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_usadapekora
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UC1DCedRgGHBdm81E1llLhOQ"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_OozoraSubaru
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_OozoraSubaru
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCvzGlP9oQwU--Y0r9id_jnA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_HoushouMarine
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_HoushouMarine
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCCzUftO8KOVkV4wQG1vkUvg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_SakuraMiko
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_SakuraMiko
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UC-hM6YJuNYVAmUWxeIr9FeA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_TsunomakiWatame
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_TsunomakiWatame
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCqm3BQLlJfvkTsX_hvm0UmA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: podcasters_spotify_pod_show_85
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - podcasters_spotify_pod_show_85
+  source: 
+    feed: "https://anchor.fm/s/7250a40c/podcast/rss"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: podcasters_spotify_pod_show_mo
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - podcasters_spotify_pod_show_mo
+  source: 
+    feed: "https://anchor.fm/s/8c75047c/podcast/rss"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: stereogum
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - stereogum
+  source: 
+    feed: "https://www.stereogum.com/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_warnermusicjapan
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_warnermusicjapan
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCfb-Ly0RXaUGxglFJmPji1g"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_thekinolibrary
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_thekinolibrary
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCfM-3hDSJkd2M_YGSn8oVkw"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_blogotheque
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_blogotheque
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCFAKGci5lneha2x4XMbzYrQ"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_HYBELABELS
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_HYBELABELS
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UC3IZKseVpdzPSBaWxBxundA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_fat_possum
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_fat_possum
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCVe1YCIwL5vsLIFmDmYlLYQ"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_rinsefm
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_rinsefm
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCgGfSxNOBkJDtCQ932iQU7Q"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_InugamiKorone
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_InugamiKorone
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UChAnqc_AY5_I3Px5dig3X1Q"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_AutoTuneVTuber
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_AutoTuneVTuber
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCXbwNp4yvI65SdF1wOzlOXw"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: iwanami_news
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - iwanami_news
+  source: 
+    feed: "https://www.iwanami.co.jp/rss/news/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_4ad_official
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_4ad_official
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UC-T3JrzHtDeHAmspt1Zn40A"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_topshelfrecords
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_topshelfrecords
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCVbn68_moZGl2ClB44wznXQ"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_videomainichi
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_videomainichi
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCI4mta4pWhYhPSLhjmUAfZQ"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_TheLotRadio
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_TheLotRadio
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCJOtExbMu0RqIdiE4nMUPxQ"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: fastcut
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - fastcut
+  source: 
+    feed: "https://fastcut.jp/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: bunshun
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - bunshun
+  source: 
+    feed: "https://bunshun.jp/list/feed/rss"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: kenta45rpm
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - kenta45rpm
+  source: 
+    feed: "https://kenta45rpm.com/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: seikatuhogotaisaku_blog_fc2
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - seikatuhogotaisaku_blog_fc2
+  source: 
+    feed: "http://seikatuhogotaisaku.blog.fc2.com/?xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: hokkory
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - hokkory
+  source: 
+    feed: "https://hokkory.com/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: japan_cnet
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - japan_cnet
+  source: 
+    feed: "http://feed.japan.cnet.com/rss/index.rdf"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: nme
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - nme
+  source: 
+    feed: "https://www.nme.com/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: macotakara
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - macotakara
+  source: 
+    feed: "https://www.macotakara.jp/rss2.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: cdpjapan_news
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - cdpjapan_news
+  source: 
+    feed: "https://cdp-japan.jp/news/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: cdposaka
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - cdposaka
+  source: 
+    feed: "https://cdp-osaka.jp/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: coliss
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - coliss
+  source: 
+    feed: "https://coliss.com/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: utapri_staffblog
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - utapri_staffblog
+  source: 
+    feed: "https://www.utapri.com/staffblog/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: jcposaka
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - jcposaka
+  source: 
+    feed: "https://www.jcp-osaka.jp/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: pref_miyagi_juyo_indexhtml
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - pref_miyagi_juyo_indexhtml
+  source: 
+    feed: "https://www.pref.miyagi.jp/juyo/juyo.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_BIRP
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_BIRP
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UC-HHJWCzskrsPdEjYulBg4w"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: pref_miyagi_chumoku_indexhtml
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - pref_miyagi_chumoku_indexhtml
+  source: 
+    feed: "https://www.pref.miyagi.jp/chumoku/chumoku.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_88rising
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_88rising
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCZW5lIUz93q_aZIkJPAC0IQ"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_oricon_cinema
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_oricon_cinema
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCYFuqPMLxH6DenFAlLeY58A"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: pref_miyagi_shinchaku_indexhtm
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - pref_miyagi_shinchaku_indexhtm
+  source: 
+    feed: "https://www.pref.miyagi.jp/shinchaku/shinchaku.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_ColumbiaMusicJp
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_ColumbiaMusicJp
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UC7RMi15o0aQacJhxOc6LLmw"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: pref_miyagi_site_newsclip_shin
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - pref_miyagi_site_newsclip_shin
+  source: 
+    feed: "https://www.pref.miyagi.jp/site/newsclip/shinchaku/shinchaku.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_pvinechannel
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_pvinechannel
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCXn2uC9y86uTrvsELArTwuw"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: city_sendai_shinchaku_indexhtm
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - city_sendai_shinchaku_indexhtm
+  source: 
+    feed: "https://www.city.sendai.jp/shinchaku/shinchaku.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_UniversalMusicJapan
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_UniversalMusicJapan
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCl2aT0nRejTCQO_LHZAftBw"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: city_sendai_miyaginoku_shincha
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - city_sendai_miyaginoku_shincha
+  source: 
+    feed: "https://www.city.sendai.jp/miyaginoku/shinchaku/shinchaku.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: city_sendai_wakabayashiku_shin
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - city_sendai_wakabayashiku_shin
+  source: 
+    feed: "https://www.city.sendai.jp/wakabayashiku/shinchaku/shinchaku.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: city_sendai_taihakuku_shinchak
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - city_sendai_taihakuku_shinchak
+  source: 
+    feed: "https://www.city.sendai.jp/taihakuku/shinchaku/shinchaku.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: city_sendai_izumiku_shinchaku_
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - city_sendai_izumiku_shinchaku_
+  source: 
+    feed: "https://www.city.sendai.jp/izumiku/shinchaku/shinchaku.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_nprmusic
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_nprmusic
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UC4eYXhJI4-7wSWc8UNRwD4A"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: city_sendai_aobaku_shinchaku_i
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - city_sendai_aobaku_shinchaku_i
+  source: 
+    feed: "https://www.city.sendai.jp/aobaku/shinchaku/shinchaku.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: worldrocknow_blog_fc2
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - worldrocknow_blog_fc2
+  source: 
+    feed: "https://worldrocknow.blog.fc2.com/?xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_Fire_Records
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_Fire_Records
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UC4Gjp9Np8j6qe_2ZSMsfNKg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_beatclub
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_beatclub
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCYyFEZ-3Hy4pdLFctDtRu3w"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_SHINOSAMPLIFIERCOMPANY
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_SHINOSAMPLIFIERCOMPANY
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCJXmiuDfQzOZBOqY94jphxA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: litera
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - litera
+  source: 
+    feed: "https://lite-ra.com/index.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: cnn
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - cnn
+  source: 
+    feed: "http://feeds.cnn.co.jp/cnn/rss"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_ui_shig
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_ui_shig
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCt30jJgChL8qeT9VPadidSw"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_NekomataOkayu
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_NekomataOkayu
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCvaTdHTWBGv3MKj3KVqJVCw"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_itolife
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_itolife
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCj_KuUzpOXAliYEesJwdrbw"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_AngeKatrina
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_AngeKatrina
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCHVXbQzkl3rDfsXWo8xi2qw"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_HoshimachiSuisei
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_HoshimachiSuisei
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UC5CwaMl1eIgY8h02uZw7u8A"
+    remote_keyword: 
+      enable: true
+      ignore: 
+      - AZKi
+      - アキ・ローゼンタール
+      - ゲーム実況
+      - さくらみこ
+      - ときのそら
+      - ホロアニメ
+      - ホログラ
+      - ホロライブゲーマーズ
+      - ロボ子さん
+      - 夏色まつり
+      - 歌ってみた
+      - 角巻わため
+      - 桐生ココ
+      - 獅白ぼたん
+      - 紫咲シオン
+      - 潤羽るしあ
+      - 常闇トワ
+      - 赤井はあと
+      - 雪花ラミィ
+      - 大空スバル
+      - 大神ミオ
+      - 天音かなた
+      - 兎田ぺこら
+      - 桃鈴ねね
+      - 猫又おかゆ
+      - 白銀ノエル
+      - 白上フブキ
+      - 尾丸ポルカ
+      - 姫森ルーナ
+      - 百鬼あやめ
+      - 不知火フレア
+      - 宝鐘マリン
+      - 魔乃アロエ
+      - 湊あくあ
+      - 夜空メル
+      - 癒月ちょこ
+      - 戌神ころね
+      - 白上フブキ
+      - 夜空メル
+      - アキ ローゼンタール
+      - hololiveEN
+      - hololiveID
+      - Gawr Gura
+      - Takanashi Kiara
+      - Mori Calliope
+      - "Ninomae Ina'nis"
+      - Watson Amelia
+      - アキロゼ
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_HakuiKoyori
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_HakuiKoyori
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UC6eWCld0KwmyHFbAqK3V-Rw"
+    remote_keyword: 
+      enable: true
+      ignore: 
+      - AZKi
+      - アキ・ローゼンタール
+      - ゲーム実況
+      - さくらみこ
+      - ときのそら
+      - ホロアニメ
+      - ホログラ
+      - ホロライブゲーマーズ
+      - ロボ子さん
+      - 夏色まつり
+      - 歌ってみた
+      - 角巻わため
+      - 桐生ココ
+      - 獅白ぼたん
+      - 紫咲シオン
+      - 潤羽るしあ
+      - 常闇トワ
+      - 星街すいせい
+      - 赤井はあと
+      - 雪花ラミィ
+      - 大空スバル
+      - 大神ミオ
+      - 天音かなた
+      - 兎田ぺこら
+      - 桃鈴ねね
+      - 猫又おかゆ
+      - 白銀ノエル
+      - 白上フブキ
+      - 尾丸ポルカ
+      - 姫森ルーナ
+      - 百鬼あやめ
+      - 不知火フレア
+      - 宝鐘マリン
+      - 魔乃アロエ
+      - 湊あくあ
+      - 夜空メル
+      - 癒月ちょこ
+      - 戌神ころね
+      - 白上フブキ
+      - 夜空メル
+      - アキ ローゼンタール
+      - hololiveEN
+      - hololiveID
+      - Gawr Gura
+      - Takanashi Kiara
+      - Mori Calliope
+      - "Ninomae Ina'nis"
+      - Watson Amelia
+      - アキロゼ
+      replace_rules: null
+    remote_xpath_tags: null
+- id: shinkomusic
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - shinkomusic
+  source: 
+    feed: "https://www.shinko-music.co.jp/new_release/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: bookmark_hatenastaff
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - bookmark_hatenastaff
+  source: 
+    feed: "https://bookmark.hatenastaff.com/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: numero
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - numero
+  source: 
+    feed: "https://numero.jp/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: jogjob_exblog
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - jogjob_exblog
+  source: 
+    feed: "https://jogjob.exblog.jp/atom.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_otonanoYouTubeChannel
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_otonanoYouTubeChannel
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCBT_5M59tUq--OUoSLiqrzA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_MadFranko008
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_MadFranko008
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCc5rm7kZthmMTzfXfrNViFA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: webdoku
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - webdoku
+  source: 
+    feed: "https://www.webdoku.jp/atom.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: belongmedia
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - belongmedia
+  source: 
+    feed: "https://belongmedia.net/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: skream_news
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - skream_news
+  source: 
+    feed: "https://skream.jp/news/index.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: pintscope
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - pintscope
+  source: 
+    feed: "https://www.pintscope.com/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: crea_bunshun
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - crea_bunshun
+  source: 
+    feed: "https://crea.bunshun.jp/list/feed/rss-all"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: honz
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - honz
+  source: 
+    feed: "https://honz.jp/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: bessatsubunshun
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - bessatsubunshun
+  source: 
+    feed: "https://bessatsu-bunshun.com/rss"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: kamekitix_exblog
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - kamekitix_exblog
+  source: 
+    feed: "https://kamekitix.exblog.jp/index.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: paperc
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - paperc
+  source: 
+    feed: "https://paperc.info/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: p2ptk
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - p2ptk
+  source: 
+    feed: "https://p2ptk.org/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: cafedc
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - cafedc
+  source: 
+    feed: "https://cafe-dc.com/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: tokion
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - tokion
+  source: 
+    feed: "https://tokion.jp/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: city_osaka_lg
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - city_osaka_lg
+  source: 
+    feed: "https://www.city.osaka.lg.jp/main/rss/rss.xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: labo_hatenastaff
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - labo_hatenastaff
+  source: 
+    feed: "https://labo.hatenastaff.com/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: maga9
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - maga9
+  source: 
+    feed: "https://maga9.jp/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: papicocafe_blog
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - papicocafe_blog
+  source: 
+    feed: "https://papicocafe.blog.jp/index.rdf"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: guitarmagazine
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - guitarmagazine
+  source: 
+    feed: "https://guitarmagazine.jp/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: kitan
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - kitan
+  source: 
+    feed: "https://kitan.jp/products/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: conveniice
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - conveniice
+  source: 
+    feed: "https://www.conveniice.com/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: kikra_ldblog
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - kikra_ldblog
+  source: 
+    feed: "http://kikra.ldblog.jp/index.rdf"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: furoku
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - furoku
+  source: 
+    feed: "https://furoku.info/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: gadget_phileweb
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - gadget_phileweb
+  source: 
+    feed: "https://gadget.phileweb.com/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: kaden_watch_impress
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - kaden_watch_impress
+  source: 
+    feed: "https://kaden.watch.impress.co.jp/data/rss/1.0/kdw/feed.rdf"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: gacha_o0o0_gp
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - gacha_o0o0_gp
+  source: 
+    feed: "https://gacha.o0o0.jp/gp/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: taisy0
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - taisy0
+  source: 
+    feed: "https://taisy0.com/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: game_watch_impress
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - game_watch_impress
+  source: 
+    feed: "https://game.watch.impress.co.jp/data/rss/1.0/gmw/feed.rdf"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: tabkul
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - tabkul
+  source: 
+    feed: "https://tabkul.com/?feed=rss2"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_lucaspoulshock
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_lucaspoulshock
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCDkAtIbVxd-1c_5vCohp2Ow"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_rekids
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_rekids
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCJzZ08lSMFlnSC7R_KK7JSg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: iphonemania
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - iphonemania
+  source: 
+    feed: "https://iphone-mania.jp/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: megido72portal
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - megido72portal
+  source: 
+    feed: "https://megido72-portal.com/feeds/recent"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_megido72_official
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_megido72_official
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCdK4vYReSQzoUaVeWkejUXg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: 373news
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - 373news
+  source: 
+    feed: "https://373news.com/rss.php"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: kawade
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - kawade
+  source: 
+    feed: "https://www.kawade.co.jp/np/rss/index.rdf"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: pvine
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - pvine
+  source: 
+    feed: "https://p-vine.jp/news/feed/atom"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: publibjp
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - publibjp
+  source: 
+    feed: "https://publibjp.com/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: keisoshobo_news
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - keisoshobo_news
+  source: 
+    feed: "https://www.keisoshobo.co.jp/rss/news/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_mbsnews
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_mbsnews
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCkKJhKO73xF1pK5h9R82ZGQ"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_dragcity
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_dragcity
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCOxV9BCCIQU6HLev3oLH1Tg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_MBS1179RADIO
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_MBS1179RADIO
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCMyikgXDbWYfvsgwSouH3Mw"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_cbc_docu
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_cbc_docu
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UC_tosV-ZWt55wbpBAYE-78w"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_sweetloveshower2023
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_sweetloveshower2023
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCQfN9Ov8l1QbHQyE383swSQ"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_BlueNoteTokyoTV
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_BlueNoteTokyoTV
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UC_FAY-K9bNTVD6KKiIZHBlA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_killrockstars
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_killrockstars
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCCnAyy7nbMkqFqDNSu4z1mg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: hmv_store_event
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - hmv_store_event
+  source: 
+    feed: "https://www.hmv.co.jp/rss/stevent/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: brutus
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - brutus
+  source: 
+    feed: "https://brutus.jp/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_hololive
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_hololive
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCJFZiqLMntJufDCHc6bQixg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_SMTOWN
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_SMTOWN
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCEf_Bc-KVd7onSeifS3py9g"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_weareoneEXO
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_weareoneEXO
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCzCedBCSSltI1TFd3bKyN6g"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_aespa
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_aespa
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UC9GtSLeksfK4yuJ_g1lgQbg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_TokinoSora
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_TokinoSora
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCp6993wxpyDPHUpavwDFqgg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_NakiriAyame
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_NakiriAyame
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UC7fk0CB07ly8oSl0aqKkqFg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_MomosuzuNene
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_MomosuzuNene
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCAWSyEs_Io8MtpY3m-zqILA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_MinatoAqua
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_MinatoAqua
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UC1opHUrw8rvnsadT-iGp7Cg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_Robocosan
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_Robocosan
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCDqI2jOz0weumE8s7paEk6g"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_ShirakamiFubuki
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_ShirakamiFubuki
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCdn5BQ06XqgXoAxIhbqw5Rg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: buzzap
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - buzzap
+  source: 
+    feed: "https://buzzap.jp/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: 7ep
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - 7ep
+  source: 
+    feed: "https://7ep.net/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_NatsuiroMatsuri
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_NatsuiroMatsuri
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCQ0UDLQCjY0rmuxCDE38FGg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_YozoraMel
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_YozoraMel
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCD8HOxPs4Xvsm8H0ZxXGiBw"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: thistimerecords
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - thistimerecords
+  source: 
+    feed: "http://www.thistimerecords.com/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: raregroove_blog4_fc2
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - raregroove_blog4_fc2
+  source: 
+    feed: "http://raregroove.blog4.fc2.com/?xml"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_AkiRosenthal
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_AkiRosenthal
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCFTLzh12_nrtzqBPsTCqenA"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: comicdays
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - comicdays
+  source: 
+    feed: "https://comic-days.com/rss"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_YuzukiChoco
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_YuzukiChoco
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UC1suqwovbL1kzsoaZgFZLKg"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: naminohanarecords
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - naminohanarecords
+  source: 
+    feed: "https://naminohana-records.com/?mode=rss"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: emrecords_shoppro
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - emrecords_shoppro
+  source: 
+    feed: "https://emrecords.shop-pro.jp/?mode=rss"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: billboard
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - billboard
+  source: 
+    feed: "https://www.billboard.com/feed/rss/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_NTSLIVEUK
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_NTSLIVEUK
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCmqKuYoZCI7D6FQzDv5nKNw"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_tbs9259
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_tbs9259
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCtK2jtkcUh59o3RdfinlZ4Q"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: youtube_prekin905
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - youtube_prekin905
+  source: 
+    feed: "http://www.youtube.com/feeds/videos.xml?channel_id=UCghM_cVTAnYVaCCAFSgZb9w"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: wezzy
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - wezzy
+  source: 
+    feed: "https://wezz-y.com/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: goodspress
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - goodspress
+  source: 
+    feed: "https://www.goodspress.jp/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: tokyosports
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - tokyosports
+  source: 
+    feed: "https://www.tokyo-sports.co.jp/list/feed/rss"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: bunkaonline
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - bunkaonline
+  source: 
+    feed: "https://bunkaonline.jp/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: xlr8r
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - xlr8r
+  source: 
+    feed: "https://xlr8r.com/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: netafull
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - netafull
+  source: 
+    feed: "https://netafull.net/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: toarukeiko
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - toarukeiko
+  source: 
+    feed: "https://toaru-keiko.com/feed/"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: mklo
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - mklo
+  source: 
+    feed: "http://www.mklo.org/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null
+- id: accessjournal
+  dest: 
+    account: 
+      bot: true
+    mastodon: 
+      url: "https://rss-mstdn.studiofreesia.com/"
+      token: hogehoge
+    tags: 
+    - accessjournal
+  source: 
+    feed: "https://access-journal.jp/feed"
+    remote_keyword: 
+      enable: true
+      ignore: null
+      replace_rules: null
+    remote_xpath_tags: null

@@ -49,6 +49,7 @@ impl StringBuilderExt for string_builder::Builder {
 pub trait ItemExt {
     fn record_id(&self) -> String;
     fn pub_date_utc(&self) -> Option<DateTime<Utc>>;
+    fn pub_date_utc_or(&self, or: DateTime<Utc>) -> DateTime<Utc>;
     fn to_status(&self) -> String;
 }
 
@@ -56,9 +57,25 @@ impl ItemExt for feed_rs::model::Entry {
     fn record_id(&self) -> String {
         self.id.clone()
     }
+
     fn pub_date_utc(&self) -> Option<DateTime<Utc>> {
-        self.published
+        if let Some(p) = self.published {
+            Some(p)
+        } else if let Some(u) = self.updated {
+            Some(u)
+        } else {
+            None
+        }
     }
+
+    fn pub_date_utc_or(&self, or: DateTime<Utc>) -> DateTime<Utc> {
+        if let Some(p) = self.pub_date_utc() {
+            p
+        } else {
+            or
+        }
+    }
+
     fn to_status(&self) -> String {
         let mut b = string_builder::Builder::default();
         if let Some(t) = &self.title {
@@ -72,7 +89,12 @@ impl ItemExt for feed_rs::model::Entry {
         b.append(
             self.categories
                 .iter()
-                .map(|c| format!("#{}", TAG_RE.replace_all(&c.label.as_ref().unwrap_or(&c.term), "_")))
+                .map(|c| {
+                    format!(
+                        "#{}",
+                        TAG_RE.replace_all(&c.label.as_ref().unwrap_or(&c.term), "_")
+                    )
+                })
                 .collect::<Vec<String>>()
                 .join(" "),
         );

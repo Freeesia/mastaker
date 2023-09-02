@@ -21,3 +21,4 @@ sea-orm = { version = "0.12.2", features = ["sqlx-postgres", "sqlx-sqlite", "run
 sea-orm-migration = "0.12.2"
 string-builder = "0.2.0"
 feed-rs = "1.3.0"
+rand = "0.8.5"
