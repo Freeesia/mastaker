@@ -180,7 +180,7 @@ async fn post(
     is_dry_run: &bool,
 ) -> Result<i32, Box<dyn std::error::Error>> {
     let status = entry.to_status();
-    println!("{} {} -> \n{}", source, entry.id, status);
+    println!("source: {}, pub: {} -> \n{}", source, entry.pub_date_utc().unwrap().to_rfc3339(), status);
     let mut posted_id = "".to_string();
     if !*is_dry_run {
         let res = client.post_status(status, None).await?;
