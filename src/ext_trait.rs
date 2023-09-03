@@ -84,20 +84,22 @@ impl ItemExt for feed_rs::model::Entry {
         for link in &self.links {
             b.append_with_line(link.href.as_str());
         }
-        // 空行を入れるとMastodonで見やすくなる
-        b.append_line();
-        b.append(
-            self.categories
-                .iter()
-                .map(|c| {
-                    format!(
-                        "#{}",
-                        TAG_RE.replace_all(&c.label.as_ref().unwrap_or(&c.term), "_")
-                    )
-                })
-                .collect::<Vec<String>>()
-                .join(" "),
-        );
+        if self.categories.len() > 0 {
+            // 空行を入れるとMastodonで見やすくなる
+            b.append_line();
+            b.append(
+                self.categories
+                    .iter()
+                    .map(|c| {
+                        format!(
+                            "#{}",
+                            TAG_RE.replace_all(&c.label.as_ref().unwrap_or(&c.term), "_")
+                        )
+                    })
+                    .collect::<Vec<String>>()
+                    .join(" "),
+            );
+        }
         b.string().unwrap()
     }
 }
