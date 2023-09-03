@@ -105,7 +105,7 @@ async fn process_feed(
         .one(&db)
         .await?
         .unwrap_or(feed_info::Model::new(config.url.clone()));
-    match info.last_fetch {
+    match info.next_fetch {
         date if date == DateTimeUtc::MIN_UTC => {
             sleep(
                 Duration::seconds(rand::thread_rng().gen_range(10..=60)),
