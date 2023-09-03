@@ -47,17 +47,12 @@ impl StringBuilderExt for string_builder::Builder {
 }
 
 pub trait ItemExt {
-    fn record_id(&self) -> String;
     fn pub_date_utc(&self) -> Option<DateTime<Utc>>;
     fn pub_date_utc_or(&self, or: DateTime<Utc>) -> DateTime<Utc>;
     fn to_status(&self) -> String;
 }
 
 impl ItemExt for feed_rs::model::Entry {
-    fn record_id(&self) -> String {
-        self.id.clone()
-    }
-
     fn pub_date_utc(&self) -> Option<DateTime<Utc>> {
         if let Some(p) = self.published {
             Some(p)
