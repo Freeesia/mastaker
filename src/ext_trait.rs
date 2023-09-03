@@ -1,6 +1,10 @@
+use async_trait::async_trait;
 use chrono::{DateTime, Duration, Utc};
 use once_cell::sync::Lazy;
 use regex::Regex;
+use sxd_xpath::{evaluate_xpath, Value::Nodeset};
+
+use crate::TagConfig;
 
 static TAG_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"[^\w]").unwrap()); // 単語文字以外の文字にマッチする正規表現
 
@@ -46,12 +50,17 @@ impl StringBuilderExt for string_builder::Builder {
     }
 }
 
+#[async_trait]
 pub trait ItemExt {
     fn pub_date_utc(&self) -> Option<DateTime<Utc>>;
     fn pub_date_utc_or(&self, or: DateTime<Utc>) -> DateTime<Utc>;
-    fn to_status(&self) -> String;
+    async fn to_status(
+        &self,
+        config: &Option<TagConfig>,
+    ) -> Result<String, Box<dyn std::error::Error>>;
 }
 
+#[async_trait]
 impl ItemExt for feed_rs::model::Entry {
     fn pub_date_utc(&self) -> Option<DateTime<Utc>> {
         if let Some(p) = self.published {
@@ -71,7 +80,10 @@ impl ItemExt for feed_rs::model::Entry {
         }
     }
 
-    fn to_status(&self) -> String {
+    async fn to_status(
+        &self,
+        config: &Option<TagConfig>,
+    ) -> Result<String, Box<dyn std::error::Error>> {
         let mut b = string_builder::Builder::default();
         if let Some(t) = &self.title {
             b.append_with_line(t.content.as_str());
@@ -79,21 +91,56 @@ impl ItemExt for feed_rs::model::Entry {
         for link in &self.links {
             b.append_with_line(link.href.as_str());
         }
-        let tags = self
+        let mut tags = self
             .categories
             .iter()
-            .map(|c| {
-                format!(
-                    "#{}",
-                    TAG_RE.replace_all(&c.label.as_ref().unwrap_or(&c.term), "_")
-                )
-            })
+            .map(|c| c.label.clone().unwrap_or(c.term.clone()))
             .collect::<Vec<String>>();
-        if tags.len() > 0 {
+        if let Some(config) = config {
+            // tags.extend(config.allways);
+
+            for link in &self.links {
+                let contents = reqwest::get(&link.href).await?.text().await?;
+                let package = sxd_html::parse_html(&contents);
+                let doc = package.as_document();
+                if let Nodeset(nodes) = evaluate_xpath(&doc, "//meta[@name='keywords']/@content")? {
+                    for node in nodes {
+                        for keyword in node.string_value().split(',') {
+                            tags.push(keyword.trim().to_string());
+                        }
+                    }
+                }
+                if let Some(xpath) = &config.xpath {
+                    if let Nodeset(nodes) = evaluate_xpath(&doc, xpath)? {
+                        for node in nodes {
+                            tags.push(node.string_value().trim().to_string());
+                        }
+                    }
+                }
+            }
+
+            if !config.ignore.is_empty() {
+                let ignore = config
+                    .ignore
+                    .iter()
+                    .filter_map(|i| Regex::new(i).ok())
+                    .collect::<Vec<Regex>>();
+                tags = tags
+                    .into_iter()
+                    .filter(|t| !ignore.iter().any(|r| r.is_match(t)))
+                    .collect::<Vec<String>>();
+            }
+        }
+        if !tags.is_empty() {
             // 空行を入れるとMastodonで見やすくなる
             b.append_line();
-            b.append(tags.join(" "));
+            b.append(
+                tags.iter()
+                    .map(|t| format!("#{}", TAG_RE.replace_all(&t, "_")))
+                    .collect::<Vec<String>>()
+                    .join(" "),
+            );
         }
-        b.string().unwrap()
+        Ok(b.string().unwrap())
     }
 }

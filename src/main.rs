@@ -29,6 +29,15 @@ struct Config {
 struct FeedConfig {
     url: String,
     token: String,
+    tag: Option<TagConfig>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TagConfig {
+    allways: Vec<String>,
+    ignore: Vec<String>,
+    replace: Vec<String>,
+    xpath: Option<String>,
 }
 
 const DATABASE_URL_ENV: &str = "DATABASE_URL";
@@ -141,7 +150,7 @@ async fn process_feed(
         };
 
         if info.last_post == 0 {
-            let id = post(&db, &client, &config.url, entry, is_dry_run).await?;
+            let id = post(&db, &client, &config, entry, is_dry_run).await?;
             let d = info.update_next_fetch(&feed, true);
             info.last_post = id;
             info.into_active_model().insert(&db).await?;
@@ -160,7 +169,7 @@ async fn process_feed(
             let title = &entry.title.as_ref().unwrap().content;
             let link = &entry.links.get(0).unwrap().href;
             if last_posted.title != *title || last_posted.link != *link {
-                info.last_post = post(&db, &client, &config.url, entry, is_dry_run).await?;
+                info.last_post = post(&db, &client, &config, entry, is_dry_run).await?;
                 posted = true;
             }
         } else {
@@ -170,7 +179,7 @@ async fn process_feed(
                 .rev()
                 .skip_while(|e| e.pub_date_utc().unwrap() <= last_posted.pub_date);
             for entry in entries {
-                info.last_post = post(&db, &client, &config.url, entry, is_dry_run).await?;
+                info.last_post = post(&db, &client, &config, entry, is_dry_run).await?;
                 posted = true;
                 sleep(Duration::seconds(30), &config.url).await;
             }
@@ -185,15 +194,16 @@ async fn process_feed(
 async fn post(
     db: &DatabaseConnection,
     client: &Box<dyn Megalodon + Send + Sync>,
-    source: &str,
+    config: &FeedConfig,
     entry: &Entry,
     is_dry_run: &bool,
 ) -> Result<i32, Box<dyn std::error::Error>> {
-    let status = entry.to_status();
+    let source = &config.url;
+    let status = entry.to_status(&config.tag).await?;
     let pud_date = entry.pub_date_utc_or(Utc::now());
     println!(
         "source: {}, pub: {} -> \n{}",
-        source,
+        config.url,
         pud_date.to_rfc3339(),
         status
     );
