@@ -154,16 +154,25 @@ async fn process_feed(
             .await?
             .unwrap();
         let mut posted = false;
-        for entry in feed.entries.iter().rev() {
-            let Some(pub_date) = entry.pub_date_utc() else {
-                return Err(format!("{}: entry has no pub_date", config.url).into());
-            };
-            if pub_date <= last_posted.pub_date {
-                continue;
+        if feed.entries.iter().any(|e| e.published == None) {
+            // atom 0.3 は published がないので、last_posted と比較する
+            let entry = feed.entries.get(0).unwrap();
+            let title = &entry.title.as_ref().unwrap().content;
+            let link = &entry.links.get(0).unwrap().href;
+            if last_posted.title != *title || last_posted.link != *link {
+                info.last_post = post(&db, &client, &config.url, entry, is_dry_run).await?;
+                posted = true;
             }
-            let id = post(&db, &client, &config.url, entry, is_dry_run).await?;
-            info.last_post = id;
-            posted = true;
+        } else {
+            let entries = feed
+                .entries
+                .iter()
+                .rev()
+                .skip_while(|e| e.pub_date_utc().unwrap() <= last_posted.pub_date);
+            for entry in entries {
+                info.last_post = post(&db, &client, &config.url, entry, is_dry_run).await?;
+                posted = true;
+            }
         }
 
         let d = info.update_next_fetch(&feed, posted);
@@ -199,7 +208,7 @@ async fn post(
         source: Set(source.to_string()),
         title: Set(entry.title.clone().unwrap().content),
         link: Set(entry.links.get(0).unwrap().href.clone()),
-        pub_date: Set(entry.pub_date_utc_or(Utc::now())),
+        pub_date: Set(pud_date),
         post_id: Set(posted_id),
         ..Default::default()
     }
