@@ -172,6 +172,7 @@ async fn process_feed(
             for entry in entries {
                 info.last_post = post(&db, &client, &config.url, entry, is_dry_run).await?;
                 posted = true;
+                sleep(Duration::seconds(30), &config.url).await;
             }
         }
 
