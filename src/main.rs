@@ -254,8 +254,22 @@ async fn sleep(duration: Duration, source: &str) {
     tokio::time::sleep(duration.to_std().unwrap()).await;
 }
 
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+fn main() {
+    let _guard = sentry::init(sentry::ClientOptions {
+        release: sentry::release_name!(),
+        #[cfg(debug_assertions)]
+        debug: true,
+        ..Default::default()
+    });
+    tokio::runtime::Builder::new_multi_thread()
+        .enable_all()
+        .build()
+        .unwrap()
+        .block_on(run())
+        .unwrap();
+}
+
+async fn run() -> Result<(), Box<dyn std::error::Error>> {
     let config = load_config()?;
     let db = setup_connection().await?;
     let is_dry_run = env::var(IS_DRY_RUN_ENV).is_ok();
