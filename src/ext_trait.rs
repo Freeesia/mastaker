@@ -91,13 +91,14 @@ impl ItemExt for feed_rs::model::Entry {
         for link in &self.links {
             b.append_with_line(link.href.as_str());
         }
+        // すごいメモリ無駄にしている気がする…
         let mut tags = self
             .categories
             .iter()
             .map(|c| c.label.clone().unwrap_or(c.term.clone()))
             .collect::<Vec<String>>();
         if let Some(config) = config {
-            // tags.extend(config.allways);
+            tags.extend(config.allways.clone());
 
             for link in &self.links {
                 let contents = reqwest::get(&link.href).await?.text().await?;
@@ -110,12 +111,14 @@ impl ItemExt for feed_rs::model::Entry {
                         }
                     }
                 }
-                if let Some(xpath) = &config.xpath {
-                    if let Nodeset(nodes) = evaluate_xpath(&doc, xpath)? {
-                        for node in nodes {
-                            tags.push(node.string_value().trim().to_string());
-                        }
-                    }
+                // xpathがない場合は無視
+                let Some(xpath) = &config.xpath else { continue };
+                let Ok(Nodeset(nodes)) = evaluate_xpath(&doc, xpath) else {
+                    // TODO: Sentryに送る
+                    continue;
+                };
+                for node in nodes {
+                    tags.push(node.string_value().trim().to_string());
                 }
             }
 
