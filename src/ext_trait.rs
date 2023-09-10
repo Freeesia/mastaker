@@ -6,7 +6,7 @@ use sxd_xpath::{evaluate_xpath, Value::Nodeset};
 
 use crate::TagConfig;
 
-static TAG_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"[^\w]").unwrap()); // 単語文字以外の文字にマッチする正規表現
+static TAG_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"[^\w]+").unwrap()); // 単語文字以外の文字にマッチする正規表現
 
 pub trait ReadableString {
     fn to_readable_string(&self) -> String;
@@ -143,7 +143,7 @@ impl ItemExt for feed_rs::model::Entry {
             b.append_line();
             b.append(
                 tags.iter()
-                    .map(|t| format!("#{}", TAG_RE.replace_all(&t, "_")))
+                    .map(|t| format!("#{}", TAG_RE.replace_all(&t, "_").trim_matches(|c| c == '_')))
                     .collect::<Vec<String>>()
                     .join(" "),
             );
