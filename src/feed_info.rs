@@ -58,7 +58,7 @@ impl Model {
         } else {
             let duration = Self::get_next_duration(feed, self.last_fetch, is_posted)
                 .max(Duration::minutes(5))
-                .min(Duration::minutes(feed.ttl.unwrap_or(360) as i64));
+                .min(Duration::minutes(feed.ttl.unwrap_or(60) as i64));
             self.last_fetch = Utc::now();
             self.next_fetch = self.last_fetch + duration;
             duration
