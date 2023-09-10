@@ -98,7 +98,7 @@ impl ItemExt for feed_rs::model::Entry {
             .map(|c| c.label.clone().unwrap_or(c.term.clone()))
             .collect::<Vec<String>>();
         if let Some(config) = config {
-            tags.extend(config.allways.clone());
+            tags.extend(config.always.clone());
 
             for link in &self.links {
                 let contents = reqwest::get(&link.href).await?.text().await?;

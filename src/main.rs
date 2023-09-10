@@ -34,7 +34,7 @@ struct FeedConfig {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct TagConfig {
-    allways: Vec<String>,
+    always: Vec<String>,
     ignore: Vec<String>,
     replace: Vec<String>,
     xpath: Option<String>,
