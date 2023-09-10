@@ -152,7 +152,11 @@ async fn process_feed(
 
         if info.last_post == 0 {
             // 初回は投稿せずに登録のみ
-            info.last_post = register(&db, &config.id, entry, &"".to_string()).await?;
+            #[cfg(debug_assertions)]
+            let posted_id = post(&client, config, entry, is_dry_run).await?;
+            #[cfg(not(debug_assertions))]
+            let posted_id = "".to_string();
+            info.last_post = register(&db, &config.id, entry, &posted_id).await?;
             let d = info.update_next_fetch(&feed, true);
             info.into_active_model().insert(&db).await?;
             sleep(d, &config.url).await;
