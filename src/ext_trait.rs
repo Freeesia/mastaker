@@ -126,6 +126,22 @@ impl ItemExt for feed_rs::model::Entry {
                 }
             }
 
+            if !config.replace.is_empty() {
+                let replace = config
+                    .replace
+                    .iter()
+                    .filter_map(|i| Regex::new(i).ok())
+                    .collect::<Vec<Regex>>();
+                tags = tags
+                    .into_iter()
+                    .map(|t| {
+                        replace
+                            .iter()
+                            .fold(t, |t, r| r.replace_all(&t, "").to_string())
+                    })
+                    .collect::<Vec<String>>();
+            }
+
             if !config.ignore.is_empty() {
                 let ignore = config
                     .ignore
