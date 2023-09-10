@@ -203,9 +203,10 @@ async fn post(
     let status = entry.to_status(config.id.clone(), &config.tag).await?;
     let pud_date = entry.pub_date_utc_or(Utc::now());
     println!(
-        "source: {}, pub: {} -> \n{}",
+        "source: {}, pub: {} rag: {} -> \n{}",
         config.url,
         pud_date.to_rfc3339(),
+        (Utc::now() - pud_date).to_readable_string(),
         status
     );
     let mut posted_id = "".to_string();
