@@ -27,6 +27,7 @@ struct Config {
 
 #[derive(Debug, Serialize, Deserialize)]
 struct FeedConfig {
+    id: String,
     url: String,
     token: String,
     tag: Option<TagConfig>,
@@ -199,7 +200,7 @@ async fn post(
     is_dry_run: &bool,
 ) -> Result<i32, Box<dyn std::error::Error>> {
     let source = &config.url;
-    let status = entry.to_status(&config.tag).await?;
+    let status = entry.to_status(config.id.clone(), &config.tag).await?;
     let pud_date = entry.pub_date_utc_or(Utc::now());
     println!(
         "source: {}, pub: {} -> \n{}",

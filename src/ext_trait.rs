@@ -56,6 +56,7 @@ pub trait ItemExt {
     fn pub_date_utc_or(&self, or: DateTime<Utc>) -> DateTime<Utc>;
     async fn to_status(
         &self,
+        id: String,
         config: &Option<TagConfig>,
     ) -> Result<String, Box<dyn std::error::Error>>;
 }
@@ -82,6 +83,7 @@ impl ItemExt for feed_rs::model::Entry {
 
     async fn to_status(
         &self,
+        id: String,
         config: &Option<TagConfig>,
     ) -> Result<String, Box<dyn std::error::Error>> {
         let mut b = string_builder::Builder::default();
@@ -92,10 +94,12 @@ impl ItemExt for feed_rs::model::Entry {
             b.append_with_line(link.href.as_str());
         }
         // すごいメモリ無駄にしている気がする…
-        let mut tags = self
-            .categories
-            .iter()
-            .map(|c| c.label.clone().unwrap_or(c.term.clone()))
+        let mut tags = std::iter::once(id)
+            .chain(
+                self.categories
+                    .iter()
+                    .map(|c| c.label.clone().unwrap_or(c.term.clone())),
+            )
             .collect::<Vec<String>>();
         if let Some(config) = config {
             tags.extend(config.always.clone());

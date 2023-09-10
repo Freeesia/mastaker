@@ -17,3 +17,10 @@
 4. 前回の更新から投稿がなかった場合、経過時間*1.5
    1. 増加分は最大1時間
 5. 6時間
+
+
+## 旧設定からの変換
+
+```sh
+cat sources.yml | yq '.sources[] | .id as $i |[{"id":.id, "url":.source.feed, "token":.dest.mastodon.token, "tag":{"always":[], "ignore":.source.remote_keyword.ignore, "replace":.source.remote_keyword.replace_rules, "xpath":.source.remote_xpath_tags}}]'
+```
