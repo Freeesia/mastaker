@@ -151,9 +151,9 @@ async fn process_feed(
         };
 
         if info.last_post == 0 {
-            let id = post(&db, &client, &config, entry, is_dry_run).await?;
+            // 初回は投稿せずに登録のみ
+            info.last_post = register(&db, &config.id, entry, &"".to_string()).await?;
             let d = info.update_next_fetch(&feed, true);
-            info.last_post = id;
             info.into_active_model().insert(&db).await?;
             sleep(d, &config.url).await;
             continue;
@@ -170,7 +170,8 @@ async fn process_feed(
             let title = &entry.title.as_ref().unwrap().content;
             let link = &entry.links.get(0).unwrap().href;
             if last_posted.title != *title || last_posted.link != *link {
-                info.last_post = post(&db, &client, &config, entry, is_dry_run).await?;
+                let posted_id = post(&client, &config, entry, is_dry_run).await?;
+                info.last_post = register(&db, &config.id, entry, &posted_id).await?;
                 posted = true;
             }
         } else {
@@ -180,7 +181,8 @@ async fn process_feed(
                 .rev()
                 .skip_while(|e| e.pub_date_utc().unwrap() <= last_posted.pub_date);
             for entry in entries {
-                info.last_post = post(&db, &client, &config, entry, is_dry_run).await?;
+                let posted_id = post(&client, &config, entry, is_dry_run).await?;
+                info.last_post = register(&db, &config.id, entry, &posted_id).await?;
                 posted = true;
                 sleep(Duration::seconds(30), &config.url).await;
             }
@@ -193,13 +195,11 @@ async fn process_feed(
 }
 
 async fn post(
-    db: &DatabaseConnection,
     client: &Box<dyn Megalodon + Send + Sync>,
     config: &FeedConfig,
     entry: &Entry,
     is_dry_run: &bool,
-) -> Result<i32, Box<dyn std::error::Error>> {
-    let source = &config.url;
+) -> Result<String, Box<dyn std::error::Error>> {
     let status = entry.to_status(config.id.clone(), &config.tag).await?;
     let pud_date = entry.pub_date_utc_or(Utc::now());
     println!(
@@ -216,12 +216,21 @@ async fn post(
         };
         posted_id = status.id;
     }
+    Ok(posted_id)
+}
+
+async fn register(
+    db: &DatabaseConnection,
+    source: &String,
+    entry: &Entry,
+    posted_id: &String,
+) -> Result<i32, Box<dyn std::error::Error>> {
     let posted = posted_item::ActiveModel {
-        source: Set(source.to_string()),
+        source: Set(source.clone()),
         title: Set(entry.title.clone().unwrap().content),
         link: Set(entry.links.get(0).unwrap().href.clone()),
-        pub_date: Set(pud_date),
-        post_id: Set(posted_id),
+        pub_date: Set(entry.pub_date_utc_or(Utc::now())),
+        post_id: Set(posted_id.clone()),
         ..Default::default()
     }
     .insert(db)
