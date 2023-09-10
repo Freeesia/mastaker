@@ -3,6 +3,7 @@ use chrono::{DateTime, Duration, Utc};
 use once_cell::sync::Lazy;
 use regex::Regex;
 use sxd_xpath::{evaluate_xpath, Value::Nodeset};
+use encoding_rs::*;
 
 use crate::TagConfig;
 
@@ -105,7 +106,8 @@ impl ItemExt for feed_rs::model::Entry {
             tags.extend(config.always.clone());
 
             for link in &self.links {
-                let contents = reqwest::get(&link.href).await?.text().await?;
+                let response = reqwest::get(&link.href).await?;
+                let contents = decode_text(response).await?;
                 let package = sxd_html::parse_html(&contents);
                 let doc = package.as_document();
                 if let Nodeset(nodes) = evaluate_xpath(&doc, "//meta[@name='keywords']/@content")? {
@@ -165,5 +167,49 @@ impl ItemExt for feed_rs::model::Entry {
             );
         }
         Ok(b.string().unwrap())
+    }
+}
+
+async fn decode_text(res: reqwest::Response) -> Result<String, reqwest::Error> {
+    let encoding = res
+        .headers()
+        .get(reqwest::header::CONTENT_TYPE)
+        .and_then(|value| value.to_str().ok())
+        .and_then(|value| value.parse::<mime::Mime>().ok())
+        .and_then(|m| {
+            m.get_param(mime::CHARSET)
+                .map(|charset| charset.to_string())
+        })
+        .and_then(|e| Encoding::for_label(e.as_bytes()));
+
+    let full = res.bytes().await?;
+
+    // ヘッダーにcharsetがある場合はそれを優先する
+    if let Some(en) = encoding {
+        let (text, _, _) = en.decode(&full);
+        return Ok(text.into_owned());
+    }
+
+    // HTMLのmetaタグにcharsetがある場合はそれを使う
+    let (tmp, _, _) = UTF_8.decode(&full);
+    let package = sxd_html::parse_html(&tmp);
+    let doc = package.as_document();
+    let Ok(Nodeset(nodes)) =
+        evaluate_xpath(&doc, "//meta[@http-equiv='content-type']/@content") else {
+        return Ok(tmp.into_owned());
+    };
+    let encoding = nodes
+        .document_order_first()
+        .and_then(|first| first.string_value().parse::<mime::Mime>().ok())
+        .and_then(|mime| {
+            mime.get_param(mime::CHARSET)
+                .map(|charset| charset.to_string())
+        })
+        .and_then(|e| Encoding::for_label(e.as_bytes()));
+    if let Some(encoding) = encoding {
+        let (text, _, _) = encoding.decode(&full);
+        Ok(text.into_owned())
+    } else {
+        Ok(tmp.into_owned())
     }
 }
