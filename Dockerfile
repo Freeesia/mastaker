@@ -1,11 +1,11 @@
 # ビルドステージ
-FROM rust:latest as builder
+FROM rust:bookworm as builder
 WORKDIR /usr/src/mastaker
 COPY . .
 RUN cargo install --path .
 
 # 実行ステージ
-FROM debian:buster-slim
+FROM debian:bookworm-slim
 WORKDIR /usr/local/bin
 # ビルドステージからビルドされたバイナリをコピー
 COPY --from=builder /usr/local/cargo/bin/mastaker .
