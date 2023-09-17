@@ -111,43 +111,43 @@ async fn process_feed(
         None,
     );
     let db = setup_connection().await?;
-    let info = FeedInfo::find_by_id(&config.url)
+    let info = FeedInfo::find_by_id(&config.id)
         .one(&db)
         .await?
-        .unwrap_or(feed_info::Model::new(config.url.clone()));
+        .unwrap_or(feed_info::Model::new(config.id.clone()));
     match info.next_fetch {
         date if date == DateTimeUtc::MIN_UTC => {
             sleep(
                 Duration::seconds(rand::thread_rng().gen_range(10..=60)),
-                &config.url,
+                &config.id,
             )
             .await;
         }
         next => {
             let now = Utc::now();
             if next > now {
-                sleep(next - now, &config.url).await;
+                sleep(next - now, &config.id).await;
             } else {
                 sleep(
                     Duration::seconds(rand::thread_rng().gen_range(10..=60)),
-                    &config.url,
+                    &config.id,
                 )
                 .await;
             }
         }
     }
     loop {
-        let mut info = FeedInfo::find_by_id(&config.url)
+        let mut info = FeedInfo::find_by_id(&config.id)
             .one(&db)
             .await?
-            .unwrap_or(feed_info::Model::new(config.url.clone()))
+            .unwrap_or(feed_info::Model::new(config.id.clone()))
             .into_active_model();
         let feed = fetch_feed(&config.url).await?;
         // 1番目の記事が存在しない場合は待機
         let Some(entry) = feed.entries.get(0) else{
             let d = info.update_next_fetch(&feed, false);
             info.save(&db).await?;
-            sleep(d, &config.url).await;
+            sleep(d, &config.id).await;
             continue;
         };
 
@@ -160,7 +160,7 @@ async fn process_feed(
             info.last_post = Set(register(&db, &config.id, entry, &posted_id).await?);
             let d = info.update_next_fetch(&feed, true);
             info.insert(&db).await?;
-            sleep(d, &config.url).await;
+            sleep(d, &config.id).await;
             continue;
         };
 
@@ -190,13 +190,13 @@ async fn process_feed(
                 info.last_post = Set(register(&db, &config.id, entry, &posted_id).await?);
                 posted = true;
                 info.clone().update(&db).await?;
-                sleep(Duration::seconds(1), &config.url).await;
+                sleep(Duration::seconds(30), &config.id).await;
             }
         }
 
         let d = info.update_next_fetch(&feed, posted);
         info.update(&db).await?;
-        sleep(d, &config.url).await;
+        sleep(d, &config.id).await;
     }
 }
 
@@ -211,9 +211,9 @@ async fn post(
     let pud_date = entry.pub_date_utc_or(&now);
     println!(
         "source: {}, pub: {} rag: {} -> \n{}",
-        config.url,
+        config.id,
         pud_date.to_rfc3339(),
-        (now - pud_date).to_readable_string(),
+        (now - pud_date).to_iso8601(),
         status
     );
     let mut posted_id = "".to_string();
@@ -247,7 +247,7 @@ async fn register(
 }
 
 async fn sleep(duration: Duration, source: &str) {
-    println!("{} sleep {}", source, duration.to_readable_string());
+    println!("{} sleep {}", source, duration.to_iso8601());
     #[cfg(debug_assertions)]
     tokio::time::sleep(
         match duration {

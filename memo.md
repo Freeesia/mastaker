@@ -28,5 +28,5 @@ cat sources.yml | yq '.sources[] | .id as $i |[{"id":.id, "url":.source.feed, "t
 ## postgresの復元
 
 ```sh
-pg_restore --no-owner -c -d postgres -1 mastaker.dump
+pg_restore --no-owner -h localhost -U postgres -c -d mastaker mastaker.dump
 ```

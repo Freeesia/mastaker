@@ -1,34 +1,47 @@
 use async_trait::async_trait;
 use chrono::{DateTime, Duration, Utc};
+use encoding_rs::*;
 use once_cell::sync::Lazy;
 use regex::Regex;
 use sxd_xpath::{evaluate_xpath, Value::Nodeset};
-use encoding_rs::*;
 
 use crate::TagConfig;
 
 static TAG_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"[^\w]+").unwrap()); // 単語文字以外の文字にマッチする正規表現
 
-pub trait ReadableString {
-    fn to_readable_string(&self) -> String;
+pub trait ISO8601 {
+    fn to_iso8601(&self) -> String;
 }
 
-impl ReadableString for Duration {
-    fn to_readable_string(&self) -> String {
+impl ISO8601 for Duration {
+    fn to_iso8601(&self) -> String {
         let total_seconds = self.num_seconds();
-        let hours = total_seconds / 3600;
-        let minutes = (total_seconds % 3600) / 60;
+        let years = total_seconds / 31_536_000;
+        let months = (total_seconds % 31_536_000) / 2_592_000;
+        let days = (total_seconds % 2_592_000) / 86_400;
+        let hours = (total_seconds % 86_400) / 36_00;
+        let minutes = (total_seconds % 36_00) / 60;
         let seconds = total_seconds % 60;
         let mut builder = string_builder::Builder::default();
-
+        builder.append("P");
+        if years > 0 {
+            builder.append(format!("{}Y", years));
+        }
+        if months > 0 {
+            builder.append(format!("{}M", months));
+        }
+        if days > 0 {
+            builder.append(format!("{}D", days));
+        }
+        builder.append("T");
         if hours > 0 {
-            builder.append(format!("{}時間", hours));
+            builder.append(format!("{}H", hours));
         }
         if minutes > 0 {
-            builder.append(format!("{}分", minutes));
+            builder.append(format!("{}M", minutes));
         }
         if seconds > 0 || builder.len() == 0 {
-            builder.append(format!("{}秒", seconds));
+            builder.append(format!("{}S", seconds));
         }
         builder.string().unwrap()
     }
