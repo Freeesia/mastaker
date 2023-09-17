@@ -1,6 +1,7 @@
 use chrono::{Duration, Utc};
 use feed_rs::model::Feed;
 use sea_orm::entity::prelude::*;
+use sea_orm::ActiveValue::*;
 
 use crate::ext_trait::ItemExt;
 
@@ -28,6 +29,24 @@ impl Model {
             last_post: 0,
         }
     }
+}
+
+impl ActiveModel {
+    pub fn update_next_fetch(&mut self, feed: &Feed, is_posted: bool) -> Duration {
+        if self.last_fetch.as_ref() == &DateTimeUtc::MIN_UTC {
+            let duration = Self::get_first_duration(feed);
+            self.last_fetch = Set(Utc::now());
+            self.next_fetch = Set(*self.last_fetch.as_ref() + duration);
+            duration
+        } else {
+            let duration = Self::get_next_duration(feed, self.last_fetch.as_ref(), is_posted)
+                .max(Duration::minutes(5))
+                .min(Duration::minutes(feed.ttl.unwrap_or(60) as i64));
+            self.last_fetch = Set(Utc::now());
+            self.next_fetch = Set(*self.last_fetch.as_ref() + duration);
+            duration
+        }
+    }
 
     /// 最初のフィードの場合、現在の時間を使用します。
     /// フィードの時間寿命（TTL）と最初の2つのエントリーの時間差に基づいて、フィードの期間を計算します。
@@ -37,35 +56,20 @@ impl Model {
         let now = Utc::now();
         let ttl = Duration::minutes(feed.ttl.unwrap_or(60) as i64);
         if feed.entries.len() > 2 {
-            let first = feed.entries.get(0).unwrap().pub_date_utc_or(now);
+            let default = now - Duration::hours(1);
+            let first = feed.entries.get(0).unwrap().pub_date_utc_or(&now);
             let second = feed
                 .entries
                 .get(1)
                 .unwrap()
-                .pub_date_utc_or(now - Duration::hours(1));
-            ttl.min(first - second).max(Duration::minutes(5))
+                .pub_date_utc_or(&default);
+            ttl.min(*first - *second).max(Duration::minutes(5))
         } else {
             ttl.max(Duration::minutes(5))
         }
     }
 
-    pub fn update_next_fetch(&mut self, feed: &Feed, is_posted: bool) -> Duration {
-        if self.last_fetch == DateTimeUtc::MIN_UTC {
-            let duration = Self::get_first_duration(feed);
-            self.last_fetch = Utc::now();
-            self.next_fetch = self.last_fetch + duration;
-            duration
-        } else {
-            let duration = Self::get_next_duration(feed, self.last_fetch, is_posted)
-                .max(Duration::minutes(5))
-                .min(Duration::minutes(feed.ttl.unwrap_or(60) as i64));
-            self.last_fetch = Utc::now();
-            self.next_fetch = self.last_fetch + duration;
-            duration
-        }
-    }
-
-    fn get_next_duration(feed: &Feed, last_fetch: DateTimeUtc, is_posted: bool) -> Duration {
+    fn get_next_duration(feed: &Feed, last_fetch: &DateTimeUtc, is_posted: bool) -> Duration {
         let now = Utc::now();
 
         // 最後のフィードが存在しない場合、前回からの経過時間+1時間を使用します。

@@ -13,3 +13,4 @@
 local.yml
 .env
 db.sqlite3
+*.dump

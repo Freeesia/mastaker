@@ -53,8 +53,8 @@ impl StringBuilderExt for string_builder::Builder {
 
 #[async_trait]
 pub trait ItemExt {
-    fn pub_date_utc(&self) -> Option<DateTime<Utc>>;
-    fn pub_date_utc_or(&self, or: DateTime<Utc>) -> DateTime<Utc>;
+    fn pub_date_utc(&self) -> Option<&DateTime<Utc>>;
+    fn pub_date_utc_or<'a>(&'a self, or: &'a DateTime<Utc>) -> &'a DateTime<Utc>;
     async fn to_status(
         &self,
         id: String,
@@ -64,19 +64,19 @@ pub trait ItemExt {
 
 #[async_trait]
 impl ItemExt for feed_rs::model::Entry {
-    fn pub_date_utc(&self) -> Option<DateTime<Utc>> {
-        if let Some(p) = self.published {
-            Some(p)
-        } else if let Some(u) = self.updated {
-            Some(u)
+    fn pub_date_utc(&self) -> Option<&DateTime<Utc>> {
+        if let Some(p) = &self.published {
+            Some(&p)
+        } else if let Some(u) = &self.updated {
+            Some(&u)
         } else {
             None
         }
     }
 
-    fn pub_date_utc_or(&self, or: DateTime<Utc>) -> DateTime<Utc> {
+    fn pub_date_utc_or<'a>(&'a self, or: &'a DateTime<Utc>) -> &'a DateTime<Utc> {
         if let Some(p) = self.pub_date_utc() {
-            p
+            &p
         } else {
             or
         }
@@ -156,6 +156,9 @@ impl ItemExt for feed_rs::model::Entry {
                     .collect::<Vec<String>>();
             }
         }
+        // 重複排除
+        let mut seen = std::collections::HashSet::new();
+        tags.retain(|e| seen.insert(e.clone()));
         if !tags.is_empty() {
             // 空行を入れるとMastodonで見やすくなる
             b.append_line();

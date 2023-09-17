@@ -24,3 +24,9 @@
 ```sh
 cat sources.yml | yq '.sources[] | .id as $i |[{"id":.id, "url":.source.feed, "token":.dest.mastodon.token, "tag":{"always":[], "ignore":.source.remote_keyword.ignore, "replace":.source.remote_keyword.replace_rules, "xpath":.source.remote_xpath_tags}}]'
 ```
+
+## postgresの復元
+
+```sh
+pg_restore --no-owner -c -d postgres -1 mastaker.dump
+```

@@ -140,30 +140,31 @@ async fn process_feed(
         let mut info = FeedInfo::find_by_id(&config.url)
             .one(&db)
             .await?
-            .unwrap_or(feed_info::Model::new(config.url.clone()));
+            .unwrap_or(feed_info::Model::new(config.url.clone()))
+            .into_active_model();
         let feed = fetch_feed(&config.url).await?;
         // 1番目の記事が存在しない場合は待機
         let Some(entry) = feed.entries.get(0) else{
             let d = info.update_next_fetch(&feed, false);
-            info.into_active_model().save(&db).await?;
+            info.save(&db).await?;
             sleep(d, &config.url).await;
             continue;
         };
 
-        if info.last_post == 0 {
+        if info.last_post.as_ref() == &0 {
             // 初回は投稿せずに登録のみ
             #[cfg(debug_assertions)]
             let posted_id = post(&client, config, entry, is_dry_run).await?;
             #[cfg(not(debug_assertions))]
             let posted_id = "".to_string();
-            info.last_post = register(&db, &config.id, entry, &posted_id).await?;
+            info.last_post = Set(register(&db, &config.id, entry, &posted_id).await?);
             let d = info.update_next_fetch(&feed, true);
-            info.into_active_model().insert(&db).await?;
+            info.insert(&db).await?;
             sleep(d, &config.url).await;
             continue;
         };
 
-        let last_posted = PostedItem::find_by_id(info.last_post)
+        let last_posted = PostedItem::find_by_id(*info.last_post.as_ref())
             .one(&db)
             .await?
             .unwrap();
@@ -175,7 +176,7 @@ async fn process_feed(
             let link = &entry.links.get(0).unwrap().href;
             if last_posted.title != *title || last_posted.link != *link {
                 let posted_id = post(&client, &config, entry, is_dry_run).await?;
-                info.last_post = register(&db, &config.id, entry, &posted_id).await?;
+                info.last_post = Set(register(&db, &config.id, entry, &posted_id).await?);
                 posted = true;
             }
         } else {
@@ -183,17 +184,18 @@ async fn process_feed(
                 .entries
                 .iter()
                 .rev()
-                .skip_while(|e| e.pub_date_utc().unwrap() <= last_posted.pub_date);
+                .skip_while(|e| e.pub_date_utc().unwrap() <= &last_posted.pub_date);
             for entry in entries {
                 let posted_id = post(&client, &config, entry, is_dry_run).await?;
-                info.last_post = register(&db, &config.id, entry, &posted_id).await?;
+                info.last_post = Set(register(&db, &config.id, entry, &posted_id).await?);
                 posted = true;
-                sleep(Duration::seconds(30), &config.url).await;
+                info.clone().update(&db).await?;
+                sleep(Duration::seconds(1), &config.url).await;
             }
         }
 
         let d = info.update_next_fetch(&feed, posted);
-        info.into_active_model().save(&db).await?;
+        info.update(&db).await?;
         sleep(d, &config.url).await;
     }
 }
@@ -205,12 +207,13 @@ async fn post(
     is_dry_run: &bool,
 ) -> Result<String, Box<dyn std::error::Error>> {
     let status = entry.to_status(config.id.clone(), &config.tag).await?;
-    let pud_date = entry.pub_date_utc_or(Utc::now());
+    let now = Utc::now();
+    let pud_date = entry.pub_date_utc_or(&now);
     println!(
         "source: {}, pub: {} rag: {} -> \n{}",
         config.url,
         pud_date.to_rfc3339(),
-        (Utc::now() - pud_date).to_readable_string(),
+        (now - pud_date).to_readable_string(),
         status
     );
     let mut posted_id = "".to_string();
@@ -226,16 +229,16 @@ async fn post(
 
 async fn register(
     db: &DatabaseConnection,
-    source: &String,
+    source: &str,
     entry: &Entry,
-    posted_id: &String,
+    posted_id: &str,
 ) -> Result<i32, Box<dyn std::error::Error>> {
     let posted = posted_item::ActiveModel {
-        source: Set(source.clone()),
-        title: Set(entry.title.clone().unwrap().content),
+        source: Set(source.to_owned()),
+        title: Set(entry.title.as_ref().unwrap().content.to_owned()),
         link: Set(entry.links.get(0).unwrap().href.clone()),
-        pub_date: Set(entry.pub_date_utc_or(Utc::now())),
-        post_id: Set(posted_id.clone()),
+        pub_date: Set(*entry.pub_date_utc_or(&Utc::now())),
+        post_id: Set(posted_id.to_owned()),
         ..Default::default()
     }
     .insert(db)
