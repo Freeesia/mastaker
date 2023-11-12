@@ -28,8 +28,7 @@ use utility::*;
 
 async fn fetch_feed(url: &str) -> anyhow::Result<feed_rs::model::Feed> {
     let content = reqwest::get(url).await?.bytes().await?;
-    let feed =
-        FeedParser::parse_with_uri(content.as_ref(), Some(url)).expect("failed to parse rss");
+    let feed = FeedParser::parse_with_uri(content.as_ref(), Some(url))?;
     Ok(feed)
 }
 
