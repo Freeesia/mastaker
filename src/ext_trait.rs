@@ -68,11 +68,7 @@ impl StringBuilderExt for string_builder::Builder {
 pub trait ItemExt {
     fn pub_date_utc(&self) -> Option<&DateTime<Utc>>;
     fn pub_date_utc_or<'a>(&'a self, or: &'a DateTime<Utc>) -> &'a DateTime<Utc>;
-    async fn to_status(
-        &self,
-        id: String,
-        config: &Option<TagConfig>,
-    ) -> Result<String, Box<dyn std::error::Error>>;
+    async fn to_status(&self, id: String, config: &Option<TagConfig>) -> anyhow::Result<String>;
 }
 
 #[async_trait]
@@ -95,11 +91,7 @@ impl ItemExt for feed_rs::model::Entry {
         }
     }
 
-    async fn to_status(
-        &self,
-        id: String,
-        config: &Option<TagConfig>,
-    ) -> Result<String, Box<dyn std::error::Error>> {
+    async fn to_status(&self, id: String, config: &Option<TagConfig>) -> anyhow::Result<String> {
         let mut b = string_builder::Builder::default();
         if let Some(t) = &self.title {
             b.append_with_line(t.content.as_str());
@@ -177,7 +169,12 @@ impl ItemExt for feed_rs::model::Entry {
             b.append_line();
             b.append(
                 tags.iter()
-                    .map(|t| format!("#{}", TAG_RE.replace_all(&t, "_").trim_matches(|c| c == '_')))
+                    .map(|t| {
+                        format!(
+                            "#{}",
+                            TAG_RE.replace_all(&t, "_").trim_matches(|c| c == '_')
+                        )
+                    })
                     .collect::<Vec<String>>()
                     .join(" "),
             );

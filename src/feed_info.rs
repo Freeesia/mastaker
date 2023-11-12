@@ -58,36 +58,45 @@ impl ActiveModel {
         if feed.entries.len() > 2 {
             let default = now - Duration::hours(1);
             let first = feed.entries.get(0).unwrap().pub_date_utc_or(&now);
-            let second = feed
-                .entries
-                .get(1)
-                .unwrap()
-                .pub_date_utc_or(&default);
+            let second = feed.entries.get(1).unwrap().pub_date_utc_or(&default);
             ttl.min(*first - *second).max(Duration::minutes(5))
         } else {
             ttl.max(Duration::minutes(5))
         }
     }
 
+    /// 基本的には更新間隔の中央値の1/6を使用します。
+    /// 前回のチェックから1回投稿があれば、前回の値を使用します。
+    /// 前回のチェックから2回以上投稿があれば、半分の値を使用します。
+    /// 前回のチェックから1回も投稿がなければ、前回の1.1倍の値を使用します。(中央値の1/6を超えない)
+    /// 中央値を超えるまでに1回も投稿がなければ、それ以降から前回の1.1倍の値を使用します。
     fn get_next_duration(feed: &Feed, last_fetch: &DateTimeUtc, is_posted: bool) -> Duration {
-        let now = Utc::now();
-
-        // 最後のフィードが存在しない場合、前回からの経過時間+1時間を使用します。
-        let Some(last_entry) = feed.entries.get(0) else {
-            let druation = now - last_fetch + Duration::hours(1);
-            return druation;
-        };
-
-        if is_posted {
-            // 前回の更新から投稿があった場合、経過時間/2
-            let duration = (now - last_entry.pub_date_utc_or(last_fetch)) / 2;
-            return duration;
+        let mut tmp = feed.entries.clone();
+        tmp.sort_by_key(|e| *e.pub_date_utc().unwrap());
+        let mut durations = Vec::with_capacity(tmp.len() - 1);
+        for (prev, next) in tmp.iter().zip(tmp.iter().skip(1)) {
+            durations.push(*next.pub_date_utc().unwrap() - *prev.pub_date_utc().unwrap());
         }
+        // 5分未満は連続投稿扱いで無視
+        durations = durations
+            .into_iter()
+            .filter(|d| *d > Duration::minutes(5))
+            .collect();
+        // 中央値の算出
+        let median = median6(durations);
 
-        // 前回の更新から投稿がなかった場合、経過時間*1.5
-        // 増加分は最大1時間
-        let duration = now - last_entry.pub_date_utc_or(last_fetch);
-        let increment = Duration::hours(1).min(duration / 2);
-        duration + increment
     }
+}
+
+fn median6(mut durations: Vec<Duration>) -> Duration {
+    // 中央値の算出
+    durations.sort();
+    let len = durations.len();
+    let median = if len % 2 == 0 {
+        (durations[len / 2 - 1] + durations[len / 2]) / 2
+    } else {
+        durations[len / 2]
+    };
+    // 中央値の1/6を算出
+    median / 6
 }
