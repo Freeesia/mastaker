@@ -32,14 +32,14 @@ impl Model {
 }
 
 impl ActiveModel {
-    pub fn update_next_fetch(&mut self, feed: &Feed, is_posted: bool) -> Duration {
+    pub fn update_next_fetch(&mut self, feed: &Feed) -> Duration {
         if self.last_fetch.as_ref() == &DateTimeUtc::MIN_UTC {
             let duration = Self::get_first_duration(feed);
             self.last_fetch = Set(Utc::now());
             self.next_fetch = Set(*self.last_fetch.as_ref() + duration);
             duration
         } else {
-            let duration = Self::get_next_duration(feed, self.last_fetch.as_ref(), is_posted)
+            let duration = Self::get_next_duration(feed, self.last_fetch.as_ref())
                 .max(Duration::minutes(5))
                 .min(Duration::minutes(feed.ttl.unwrap_or(60) as i64));
             self.last_fetch = Set(Utc::now());
@@ -65,12 +65,31 @@ impl ActiveModel {
         }
     }
 
-    /// 基本的には更新間隔の中央値の1/6を使用します。
-    /// 前回のチェックから1回投稿があれば、前回の値を使用します。
-    /// 前回のチェックから2回以上投稿があれば、半分の値を使用します。
-    /// 前回のチェックから1回も投稿がなければ、前回の1.1倍の値を使用します。(中央値の1/6を超えない)
-    /// 中央値を超えるまでに1回も投稿がなければ、それ以降から前回の1.1倍の値を使用します。
-    fn get_next_duration(feed: &Feed, last_fetch: &DateTimeUtc, is_posted: bool) -> Duration {
+    /// 前回のチェックから2回以上投稿があれば、前回のチェック間隔から半分の値を使用します。
+    /// 前回のチェックから1回投稿があれば、前回のチェック間隔を使用します。
+    /// 前回のチェックから1回も投稿がないかつ間隔が中央値の1/6未満なら、中央値の1/6を使用します。
+    /// 前回のチェックから1回も投稿がないかつ間隔が中央値未満なら、前回の1.1倍の値を使用します。(中央値を超えない)
+    /// 中央値を超えるまでに1回も投稿がなければ、それ以降から前回の1.5倍の値を使用します。
+    fn get_next_duration(feed: &Feed, last_fetch: &DateTimeUtc) -> Duration {
+        // 前回のチェックから現在時刻の間隔の取得
+        let duration = Utc::now() - *last_fetch;
+        // 前回のチェックからの投稿を取得
+        let mut last_posted: Vec<_> = feed
+            .entries
+            .iter()
+            .filter(|e| e.pub_date_utc().unwrap() > last_fetch)
+            .collect();
+        last_posted.sort_by_key(|e| e.pub_date_utc().unwrap());
+        // 前回のチェックから2回以上投稿があれば、半分の値を使用
+        if last_posted.len() >= 2 {
+            return duration / 2;
+        }
+        // 前回のチェックから1回投稿があれば、前回の投稿からの同じ間隔を使用
+        if last_posted.len() == 1 {
+            return *last_posted[0].pub_date_utc().unwrap() - *last_fetch;
+        }
+
+        // 前回のチェックから1回も投稿がなければ、
         let mut tmp = feed.entries.clone();
         tmp.sort_by_key(|e| *e.pub_date_utc().unwrap());
         let mut durations = Vec::with_capacity(tmp.len() - 1);
@@ -82,21 +101,25 @@ impl ActiveModel {
             .into_iter()
             .filter(|d| *d > Duration::minutes(5))
             .collect();
-        // 中央値の算出
-        let median = median6(durations);
-
+        let median = median(durations);
+        let median6 = median / 6;
+        if duration < median6 {
+            return median6;
+        } else if duration < median {
+            return duration * 11 / 10;
+        } else {
+            return duration * 3 / 2;
+        }
     }
 }
 
-fn median6(mut durations: Vec<Duration>) -> Duration {
+fn median(mut durations: Vec<Duration>) -> Duration {
     // 中央値の算出
     durations.sort();
     let len = durations.len();
-    let median = if len % 2 == 0 {
+    if len % 2 == 0 {
         (durations[len / 2 - 1] + durations[len / 2]) / 2
     } else {
         durations[len / 2]
-    };
-    // 中央値の1/6を算出
-    median / 6
+    }
 }

@@ -40,3 +40,4 @@ pg_restore --no-owner -h localhost -U postgres -c -d mastaker mastaker.dump
    [profile.release]
    panic = 'abort'
    ```
+* 気軽に`unwrap()`するとpanicするので、`?`を使う
