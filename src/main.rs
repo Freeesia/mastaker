@@ -17,7 +17,7 @@ use rand::Rng;
 use reqwest;
 use sea_orm::{prelude::DateTimeUtc, *};
 use sentry_anyhow::capture_anyhow;
-use std::env;
+use std::{collections::HashMap, env};
 use tokio::sync::mpsc::*;
 
 use constants::*;
@@ -138,14 +138,17 @@ struct PostInfo(Entry, FeedConfig);
 
 async fn post_loop(mut rx: Receiver<PostInfo>, base_url: &String, is_dry_run: &bool) {
     let db = setup_connection().await.unwrap();
+    let mut cache = HashMap::new();
     while let Some(PostInfo(entry, config)) = rx.recv().await {
         println!("Got: {:?}", entry);
-        let client = megalodon::generator(
-            megalodon::SNS::Mastodon,
-            base_url.clone(),
-            Some(config.token.clone()),
-            None,
-        );
+        let client = cache.entry(config.url.clone()).or_insert_with(|| {
+            megalodon::generator(
+                megalodon::SNS::Mastodon,
+                base_url.clone(),
+                Some(config.token.clone()),
+                None,
+            )
+        });
         match post(&client, &config, &entry, is_dry_run).await {
             Ok(posted_id) => {
                 register(&db, &config, &entry, &posted_id).await.unwrap();
@@ -169,11 +172,10 @@ async fn post(
     let now = Utc::now();
     let pud_date = entry.pub_date_utc_or(&now);
     println!(
-        "source: {}, pub: {} rag: {} -> \n{}",
+        "source: {}, pub: {} rag: {}",
         config.id,
         pud_date.to_rfc3339(),
-        (now - pud_date).to_iso8601(),
-        status
+        (now - pud_date).to_iso8601()
     );
     if *is_dry_run {
         println!("dry run");

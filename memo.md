@@ -30,3 +30,7 @@ cat sources.yml | yq '.sources[] | .id as $i |[{"id":.id, "url":.source.feed, "t
 ```sh
 pg_restore --no-owner -h localhost -U postgres -c -d mastaker mastaker.dump
 ```
+
+## Rust
+
+* とりあえず`clone()`でコピーしておくと動くけど、最適かは不明
