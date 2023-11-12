@@ -34,3 +34,9 @@ pg_restore --no-owner -h localhost -U postgres -c -d mastaker mastaker.dump
 ## Rust
 
 * とりあえず`clone()`でコピーしておくと動くけど、最適かは不明
+* デフォルトだとスレッドがpanicしてもプロセスは落ちない
+  * Cargo.tomlに以下を追加するとpanicしたら落ちる
+   ```toml
+   [profile.release]
+   panic = 'abort'
+   ```

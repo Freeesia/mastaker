@@ -26,22 +26,7 @@ use schema::*;
 use setup::*;
 use utility::*;
 
-async fn fetch_feed(url: &str) -> anyhow::Result<feed_rs::model::Feed> {
-    let content = reqwest::get(url).await?.bytes().await?;
-    let feed = FeedParser::parse_with_uri(content.as_ref(), Some(url))?;
-    Ok(feed)
-}
-
-async fn feed_loop(config: &FeedConfig, tx: Sender<PostInfo>) {
-    loop {
-        if let Err(err) = process_feed(config, &tx).await {
-            let id = capture_anyhow(&err);
-            println!("failed to process feed: {:?}, sentry: {}", err, id);
-        };
-    }
-}
-
-async fn process_feed(config: &FeedConfig, tx: &Sender<PostInfo>) -> anyhow::Result<()> {
+async fn feed_loop(config: &FeedConfig, tx: Sender<PostInfo>) -> anyhow::Result<()> {
     let db = setup_connection().await?;
     let info = FeedInfo::find_by_id(&config.id)
         .one(&db)
@@ -69,69 +54,82 @@ async fn process_feed(config: &FeedConfig, tx: &Sender<PostInfo>) -> anyhow::Res
         }
     }
     loop {
-        let mut info = FeedInfo::find_by_id(&config.id)
-            .one(&db)
-            .await?
-            .unwrap_or(feed_info::Model::new(config.id.clone()))
-            .into_active_model();
-        let feed = fetch_feed(&config.url).await?;
-        // 1番目の記事が存在しない場合は待機
-        let Some(entry) = feed.entries.get(0) else{
-            let d = info.update_next_fetch(&feed, false);
-            info.save(&db).await?;
-            sleep(d, &config.id).await;
-            continue;
+        if let Err(err) = process_feed(&db, config, &tx).await {
+            let id = capture_anyhow(&err);
+            println!("failed to process feed: {:?}, sentry: {}", err, id);
         };
+    }
+}
 
-        if info.last_post.as_ref() == &0 {
-            // 初回は投稿せずに登録のみ
-            let d = info.update_next_fetch(&feed, true);
-            info.insert(&db).await?;
+async fn process_feed(
+    db: &DatabaseConnection,
+    config: &FeedConfig,
+    tx: &Sender<PostInfo>,
+) -> anyhow::Result<()> {
+    let mut info = FeedInfo::find_by_id(&config.id)
+        .one(db)
+        .await?
+        .unwrap_or(feed_info::Model::new(config.id.clone()))
+        .into_active_model();
+    let content = reqwest::get(&config.url).await?.bytes().await?;
+    let feed = FeedParser::parse_with_uri(content.as_ref(), Some(&config.url))?;
+    // 1番目の記事が存在しない場合は待機
+    let Some(entry) = feed.entries.get(0) else {
+        let d = info.update_next_fetch(&feed, false);
+        info.save(db).await?;
+        sleep(d, &config.id).await;
+        return Ok(());
+    };
 
-            // デバッグ時は投稿する
-            #[cfg(debug_assertions)]
+    if info.last_post.as_ref() == &0 {
+        // 初回は投稿せずに登録のみ
+        let d = info.update_next_fetch(&feed, true);
+        info.insert(db).await?;
+
+        // デバッグ時は投稿する
+        #[cfg(debug_assertions)]
+        tx.send(PostInfo(entry.clone(), config.clone()))
+            .await
+            .unwrap();
+
+        sleep(d, &config.id).await;
+        return Ok(());
+    };
+
+    let last_posted = PostedItem::find_by_id(*info.last_post.as_ref())
+        .one(db)
+        .await?
+        .unwrap();
+    let mut posted = false;
+    if feed.entries.iter().any(|e| e.published == None) {
+        // atom 0.3 は published がないので、last_posted と比較する
+        let entry = feed.entries.get(0).unwrap();
+        let title = &entry.title.as_ref().unwrap().content;
+        let link = &entry.links.get(0).unwrap().href;
+        if last_posted.title != *title || last_posted.link != *link {
             tx.send(PostInfo(entry.clone(), config.clone()))
                 .await
                 .unwrap();
-
-            sleep(d, &config.id).await;
-            continue;
-        };
-
-        let last_posted = PostedItem::find_by_id(*info.last_post.as_ref())
-            .one(&db)
-            .await?
-            .unwrap();
-        let mut posted = false;
-        if feed.entries.iter().any(|e| e.published == None) {
-            // atom 0.3 は published がないので、last_posted と比較する
-            let entry = feed.entries.get(0).unwrap();
-            let title = &entry.title.as_ref().unwrap().content;
-            let link = &entry.links.get(0).unwrap().href;
-            if last_posted.title != *title || last_posted.link != *link {
-                tx.send(PostInfo(entry.clone(), config.clone()))
-                    .await
-                    .unwrap();
-                posted = true;
-            }
-        } else {
-            let entries = feed
-                .entries
-                .iter()
-                .rev()
-                .skip_while(|e| e.pub_date_utc().unwrap() <= &last_posted.pub_date);
-            for entry in entries {
-                tx.send(PostInfo(entry.clone(), config.clone()))
-                    .await
-                    .unwrap();
-                posted = true;
-            }
+            posted = true;
         }
-
-        let d = info.update_next_fetch(&feed, posted);
-        info.update(&db).await?;
-        sleep(d, &config.id).await;
+    } else {
+        let entries = feed
+            .entries
+            .iter()
+            .rev()
+            .skip_while(|e| e.pub_date_utc().unwrap() <= &last_posted.pub_date);
+        for entry in entries {
+            tx.send(PostInfo(entry.clone(), config.clone()))
+                .await
+                .unwrap();
+            posted = true;
+        }
     }
+
+    let d = info.update_next_fetch(&feed, posted);
+    info.update(db).await?;
+    sleep(d, &config.id).await;
+    Ok(())
 }
 
 struct PostInfo(Entry, FeedConfig);
