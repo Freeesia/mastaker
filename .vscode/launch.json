@@ -12,7 +12,8 @@
                 "args": [
                     "build",
                     "--bin=mastaker",
-                    "--package=mastaker"
+                    "--package=mastaker",
+                    // "--features=skip_sleep",
                 ],
                 "filter": {
                     "name": "mastaker",
