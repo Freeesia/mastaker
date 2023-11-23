@@ -67,6 +67,7 @@ async fn process_feed(
     config: &FeedConfig,
     tx: &Sender<PostInfo>,
 ) -> anyhow::Result<()> {
+    println!("check feed: {}", config.id);
     let mut info = FeedInfo::find_by_id(&config.id)
         .one(db)
         .await?
