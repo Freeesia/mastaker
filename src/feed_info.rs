@@ -12,7 +12,6 @@ pub struct Model {
     pub source: String,
     pub last_fetch: DateTimeUtc,
     pub next_fetch: DateTimeUtc,
-    pub last_post: i32,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
@@ -26,7 +25,6 @@ impl Model {
             source,
             last_fetch: DateTimeUtc::UNIX_EPOCH,
             next_fetch: DateTimeUtc::UNIX_EPOCH,
-            last_post: 0,
         }
     }
 }

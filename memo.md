@@ -41,3 +41,9 @@ pg_restore --no-owner -h localhost -U postgres -c -d mastaker mastaker.dump
    panic = 'abort'
    ```
 * 気軽に`unwrap()`するとpanicするので、`?`を使う
+
+
+## task
+
+* [x] 投稿が詰まると重複してキューに追加してしまう
+* [ ] ETAGとか設定したい

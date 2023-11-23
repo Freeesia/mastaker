@@ -1,10 +1,10 @@
 use crate::constants::*;
 use crate::schema::*;
-use crate::{feed_info, posted_item};
+use crate::{feed_info, post_item};
 use std::{env, fs::File};
 
 use feed_info::Entity as FeedInfo;
-use posted_item::Entity as PostedItem;
+use post_item::Entity as PostedItem;
 use sea_orm::*;
 use sea_orm_migration::SchemaManager;
 
