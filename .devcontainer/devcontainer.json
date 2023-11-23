@@ -12,7 +12,7 @@
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [5432],
+	"forwardPorts": ["pgweb:8081"],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "rustc --version",
@@ -21,9 +21,7 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"redhat.vscode-yaml",
-				"mtxr.sqltools",
-				"mtxr.sqltools-driver-pg"
+				"redhat.vscode-yaml"
 			]
 		}
 	}
