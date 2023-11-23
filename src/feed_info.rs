@@ -24,8 +24,8 @@ impl Model {
     pub fn new(source: String) -> Self {
         Self {
             source,
-            last_fetch: DateTimeUtc::MIN_UTC,
-            next_fetch: DateTimeUtc::MIN_UTC,
+            last_fetch: DateTimeUtc::UNIX_EPOCH,
+            next_fetch: DateTimeUtc::UNIX_EPOCH,
             last_post: 0,
         }
     }
@@ -33,7 +33,7 @@ impl Model {
 
 impl ActiveModel {
     pub fn update_next_fetch(&mut self, feed: &Feed) -> Duration {
-        if self.last_fetch.as_ref() == &DateTimeUtc::MIN_UTC {
+        if self.last_fetch.as_ref() == &DateTimeUtc::UNIX_EPOCH {
             let duration = Self::get_first_duration(feed);
             self.last_fetch = Set(Utc::now());
             self.next_fetch = Set(*self.last_fetch.as_ref() + duration);

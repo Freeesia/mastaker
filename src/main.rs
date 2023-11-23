@@ -33,7 +33,7 @@ async fn feed_loop(config: &FeedConfig, tx: Sender<PostInfo>) -> anyhow::Result<
         .await?
         .unwrap_or(feed_info::Model::new(config.id.clone()));
     match info.next_fetch {
-        date if date == DateTimeUtc::MIN_UTC => {
+        date if date == DateTimeUtc::UNIX_EPOCH => {
             sleep(
                 Duration::seconds(rand::thread_rng().gen_range(10..=60)),
                 &config.id,
@@ -68,33 +68,36 @@ async fn process_feed(
     tx: &Sender<PostInfo>,
 ) -> anyhow::Result<()> {
     println!("check feed: {}", config.id);
-    let mut info = FeedInfo::find_by_id(&config.id)
-        .one(db)
-        .await?
-        .unwrap_or(feed_info::Model::new(config.id.clone()))
-        .into_active_model();
+    let mut info = match FeedInfo::find_by_id(&config.id).one(db).await? {
+        Some(info) => info.into_active_model(),
+        None => {
+            let info = feed_info::Model::new(config.id.clone()).into_active_model();
+            info.insert(db).await?.into_active_model()
+        }
+    };
     let content = reqwest::get(&config.url).await?.bytes().await?;
     let feed = FeedParser::parse_with_uri(content.as_ref(), Some(&config.url))?;
-    // 1番目の記事が存在しない場合は待機
-    let Some(entry) = feed.entries.get(0) else {
+    // 最新の投稿を取得
+    let Some(entry) = feed
+        .entries
+        .iter()
+        .max_by_key(|e| e.pub_date_utc().unwrap())
+    else {
+        // 1番目の記事が存在しない場合は待機
         let d = info.update_next_fetch(&feed);
         info.save(db).await?;
         sleep(d, &config.id).await;
         return Ok(());
     };
-
     if info.last_post.as_ref() == &0 {
         // 初回は投稿せずに登録のみ
         let d = info.update_next_fetch(&feed);
-        info.insert(db).await?;
-
-        // デバッグ時は投稿する
-        #[cfg(debug_assertions)]
-        tx.send(PostInfo(entry.clone(), config.clone())).await?;
+        info.save(db).await?;
+        register(db, config, entry, "").await?;
 
         sleep(d, &config.id).await;
         return Ok(());
-    };
+    }
 
     let last_posted = PostedItem::find_by_id(*info.last_post.as_ref())
         .one(db)
@@ -109,11 +112,14 @@ async fn process_feed(
             tx.send(PostInfo(entry.clone(), config.clone())).await?;
         }
     } else {
-        let entries = feed
+        // 前回投稿日時以降の記事を投稿する
+        let mut entries: Vec<_> = feed
             .entries
             .iter()
-            .rev()
-            .skip_while(|e| e.pub_date_utc().unwrap() <= &last_posted.pub_date);
+            .filter(|e| e.pub_date_utc().unwrap() > &last_posted.pub_date)
+            .collect();
+        // 公開日時でソートする
+        entries.sort_by_key(|e| e.pub_date_utc().unwrap());
         for entry in entries {
             tx.send(PostInfo(entry.clone(), config.clone())).await?;
         }
@@ -174,7 +180,10 @@ async fn post(
     } else {
         let res = client.post_status(status, None).await?;
         let PostStatusOutput::Status(status) = res.json() else {
-            return Err(anyhow::anyhow!(format!("failed expected response: {:?}", res)));
+            return Err(anyhow::anyhow!(format!(
+                "failed expected response: {:?}",
+                res
+            )));
         };
         Ok(status.id)
     }
