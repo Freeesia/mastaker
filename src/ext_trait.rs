@@ -93,8 +93,10 @@ impl ItemExt for feed_rs::model::Entry {
 
     async fn to_status(&self, id: String, config: &Option<TagConfig>) -> anyhow::Result<String> {
         let mut b = string_builder::Builder::default();
+        let mut title = None;
         if let Some(t) = &self.title {
             b.append_with_line(t.content.as_str());
+            title = Some(&t.content);
         }
         for link in &self.links {
             b.append_with_line(link.href.as_str());
@@ -164,6 +166,9 @@ impl ItemExt for feed_rs::model::Entry {
         // 重複排除
         let mut seen = std::collections::HashSet::new();
         tags.retain(|e| seen.insert(e.clone()));
+        if let Some(title) = title {
+            tags.retain(|e| !e.contains(title));
+        }
         if !tags.is_empty() {
             // 空行を入れるとMastodonで見やすくなる
             b.append_line();
@@ -207,8 +212,8 @@ async fn decode_text(res: reqwest::Response) -> Result<String, reqwest::Error> {
     let (tmp, _, _) = UTF_8.decode(&full);
     let package = sxd_html::parse_html(&tmp);
     let doc = package.as_document();
-    let Ok(Nodeset(nodes)) =
-        evaluate_xpath(&doc, "//meta[@http-equiv='content-type']/@content") else {
+    let Ok(Nodeset(nodes)) = evaluate_xpath(&doc, "//meta[@http-equiv='content-type']/@content")
+    else {
         return Ok(tmp.into_owned());
     };
     let encoding = nodes
