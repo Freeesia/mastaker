@@ -169,6 +169,7 @@ impl ItemExt for feed_rs::model::Entry {
         if let Some(title) = title {
             tags.retain(|e| !e.contains(title));
         }
+        tags.retain(|e| !e.is_empty());
         if !tags.is_empty() {
             // 空行を入れるとMastodonで見やすくなる
             b.append_line();
