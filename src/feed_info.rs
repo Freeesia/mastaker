@@ -48,18 +48,24 @@ impl ActiveModel {
 
     /// 最初のフィードの場合、現在の時間を使用します。
     /// フィードの時間寿命（TTL）と最初の2つのエントリーの時間差に基づいて、フィードの期間を計算します。
-    /// エントリーが2つ未満の場合、TTLが使用されます。
+    /// エントリーが2つ未満の場合、TTL / 6 が使用されます。
     /// 5分未満の場合、5分を使用します。
     fn get_first_duration(feed: &Feed) -> Duration {
         let now = Utc::now();
         let ttl = Duration::minutes(feed.ttl.unwrap_or(60) as i64);
-        if feed.entries.len() > 2 {
-            let default = now - Duration::hours(1);
-            let first = feed.entries.get(0).unwrap().pub_date_utc_or(&now);
-            let second = feed.entries.get(1).unwrap().pub_date_utc_or(&default);
-            ttl.min(*first - *second).max(Duration::minutes(5))
+        let mut pubs = feed
+            .entries
+            .iter()
+            .map(|e| e.pub_date_utc_or(&now))
+            .collect::<Vec<_>>();
+        pubs.sort();
+        pubs.dedup();
+        if pubs.len() > 2 {
+            let first = pubs.get(0).unwrap();
+            let second = pubs.get(1).unwrap();
+            Duration::minutes(5).max(ttl.min(**second - **first) / 6)
         } else {
-            ttl.max(Duration::minutes(5))
+            Duration::minutes(5).max(ttl / 6)
         }
     }
 
