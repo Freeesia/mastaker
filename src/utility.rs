@@ -1,8 +1,8 @@
 use crate::ext_trait::*;
 use chrono::Duration;
 
-pub async fn sleep(duration: Duration, source: &str) {
-    println!("{} sleep {}", source, duration.to_iso8601());
+pub async fn sleep(duration: Duration, reason: &str) {
+    println!("{} sleep {}", reason, duration.to_iso8601());
     #[cfg(skip_sleep)]
     tokio::time::sleep(
         match duration {

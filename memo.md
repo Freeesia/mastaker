@@ -46,4 +46,6 @@ pg_restore --no-owner -h localhost -U postgres -c -d mastaker mastaker.dump
 ## task
 
 * [x] 投稿が詰まると重複してキューに追加してしまう
-* [ ] ETAGとか設定したい
+* [x] ETAGとか設定したい
+  * あんまりETAG設定されないから意味ないかも
+* [x] キューに一気に追加すると、他のソースの優先度が下がる

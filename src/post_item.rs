@@ -1,4 +1,8 @@
-use sea_orm::entity::prelude::*;
+use chrono::Utc;
+use feed_rs::model::Entry;
+use sea_orm::{entity::prelude::*, Set};
+
+use crate::ext_trait::ItemExt;
 
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel)]
 #[sea_orm(table_name = "post_item")]
@@ -19,3 +23,22 @@ pub struct Model {
 pub enum Relation {}
 
 impl ActiveModelBehavior for ActiveModel {}
+
+impl Entity {
+    pub async fn insert(
+        db: &DatabaseConnection,
+        source: &String,
+        entry: &Entry,
+    ) -> Result<Model, anyhow::Error> {
+        let post = ActiveModel {
+            source: Set(source.to_owned()),
+            title: Set(entry.title.as_ref().unwrap().content.to_owned()),
+            link: Set(entry.links.get(0).unwrap().href.clone()),
+            pub_date: Set(*entry.pub_date_utc_or(&Utc::now())),
+            ..Default::default()
+        }
+        .insert(db)
+        .await?;
+        Ok(post)
+    }
+}
