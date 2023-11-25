@@ -9,13 +9,13 @@ use crate::ext_trait::ItemExt;
 pub struct Model {
     #[sea_orm(primary_key)]
     pub id: i32,
-    #[sea_orm(index)]
+    #[sea_orm(indexed)]
     pub source: String,
     pub title: String,
     pub link: String,
-    #[sea_orm(index)]
+    #[sea_orm(indexed)]
     pub post_id: Option<String>,
-    #[sea_orm(index)]
+    #[sea_orm(indexed)]
     pub pub_date: DateTimeUtc,
 }
 
