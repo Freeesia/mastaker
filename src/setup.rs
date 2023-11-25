@@ -4,7 +4,7 @@ use crate::{feed_info, post_item};
 use std::{env, fs::File};
 
 use feed_info::Entity as FeedInfo;
-use post_item::Entity as PostedItem;
+use post_item::Entity as PostItem;
 use sea_orm::*;
 use sea_orm_migration::SchemaManager;
 
@@ -29,7 +29,7 @@ pub async fn setup_tables(db: &DatabaseConnection) -> Result<(), DbErr> {
     schema_manager
         .create_table(
             schema
-                .create_table_from_entity(PostedItem)
+                .create_table_from_entity(PostItem)
                 .if_not_exists()
                 .take(),
         )
@@ -42,7 +42,7 @@ pub async fn setup_tables(db: &DatabaseConnection) -> Result<(), DbErr> {
                 .take(),
         )
         .await?;
-    for mut stmt in schema.create_index_from_entity(PostedItem) {
+    for mut stmt in schema.create_index_from_entity(PostItem) {
         schema_manager
             .create_index(stmt.if_not_exists().take())
             .await?;
