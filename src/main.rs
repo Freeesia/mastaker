@@ -172,6 +172,19 @@ async fn post_loop(mut rx: Receiver<PostInfo>, base_url: &String, is_dry_run: &b
             println!("failed to update post id: {:?}, sentry: {}", e, id);
         }
 
+        if let Ok(queue_count) = PostItem::find()
+            .filter(post_item::Column::PostId.is_null())
+            .count(&db)
+            .await
+        {
+            if let Ok(feed_count) = FeedInfo::find().count(&db).await {
+                println!("queue count: {}", queue_count - feed_count);
+            } else {
+                println!("failed to count feed");
+            }
+        } else {
+            println!("failed to count queue");
+        }
         sleep(Duration::seconds(5), &format!("post wait: {}", config.id)).await;
     }
 }
