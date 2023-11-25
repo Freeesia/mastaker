@@ -3,7 +3,7 @@ use chrono::Duration;
 
 pub async fn sleep(duration: Duration, reason: &str) {
     println!("{} sleep {}", reason, duration.to_iso8601());
-    #[cfg(skip_sleep)]
+    #[cfg(feature = "skip_sleep")]
     tokio::time::sleep(
         match duration {
             d if d > Duration::minutes(1) => Duration::seconds(10),
@@ -13,6 +13,6 @@ pub async fn sleep(duration: Duration, reason: &str) {
         .unwrap(),
     )
     .await;
-    #[cfg(not(skip_sleep))]
+    #[cfg(not(feature = "skip_sleep"))]
     tokio::time::sleep(duration.to_std().unwrap()).await;
 }
