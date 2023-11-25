@@ -35,3 +35,13 @@ services:
 
     # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
+  pgweb:
+    image: sosedoff/pgweb
+    ports:
+      - 8081:8081
+    environment:
+      PGWEB_DATABASE_URL: postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@db:$POSTGRES_PORT/$POSTGRES_DB?sslmode=disable
+    depends_on:
+      - db
+    env_file:
+        - .env
