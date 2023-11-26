@@ -1,3 +1,5 @@
+use std::collections::HashSet;
+
 use async_trait::async_trait;
 use chrono::{DateTime, Duration, Utc};
 use encoding_rs::*;
@@ -163,9 +165,9 @@ impl ItemExt for feed_rs::model::Entry {
                     .collect::<Vec<String>>();
             }
         }
-        // 重複排除
-        let mut seen = std::collections::HashSet::new();
-        tags.retain(|e| seen.insert(e.clone()));
+        // 大文字小文字を区別しない重複排除
+        let mut seen = HashSet::new();
+        tags.retain(|e| seen.insert(e.to_uppercase()));
         if let Some(title) = title {
             tags.retain(|e| !e.contains(title));
         }
