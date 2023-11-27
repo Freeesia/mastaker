@@ -10,6 +10,7 @@ use sxd_xpath::{evaluate_xpath, Value::Nodeset};
 use crate::TagConfig;
 
 static TAG_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"[^\w]+").unwrap()); // 単語文字以外の文字にマッチする正規表現
+static COMBINE_TAG_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"#\s(\w)").unwrap()); // #と単語文字の間にスペースがある場合にマッチする正規表現
 
 pub trait ISO8601 {
     fn to_iso8601(&self) -> String;
@@ -97,7 +98,8 @@ impl ItemExt for feed_rs::model::Entry {
         let mut b = string_builder::Builder::default();
         let mut title = None;
         if let Some(t) = &self.title {
-            b.append_with_line(t.content.as_str());
+            let head = COMBINE_TAG_RE.replace_all(t.content.as_str(), "#$1").to_string();
+            b.append_with_line(head);
             title = Some(&t.content);
         }
         for link in &self.links {
