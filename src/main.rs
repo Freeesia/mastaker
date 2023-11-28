@@ -224,6 +224,7 @@ fn main() {
         release: sentry::release_name!(),
         #[cfg(debug_assertions)]
         debug: true,
+        attach_stacktrace: true,
         ..Default::default()
     });
     // sentryを動かすために必要
