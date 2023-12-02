@@ -19,6 +19,7 @@ use sea_orm::{prelude::DateTimeUtc, *};
 use sentry_anyhow::capture_anyhow;
 use std::{collections::HashMap, env};
 use tokio::sync::mpsc::*;
+use tokio_retry::{strategy::FixedInterval, RetryIf};
 
 use constants::*;
 use ext_trait::*;
@@ -148,7 +149,24 @@ async fn post_loop(mut rx: Receiver<PostInfo>, base_url: &String, is_dry_run: &b
                 None,
             )
         });
-        let posted_id = post(&client, &config, &entry, is_dry_run).await;
+        let posted_id = RetryIf::spawn(
+            FixedInterval::from_millis(1000).take(5),
+            || async { post(&client, &config, &entry, is_dry_run).await },
+            |e: &anyhow::Error| {
+                if let Some(e) = e.downcast_ref::<megalodon::error::Error>() {
+                    if let megalodon::error::Error::OwnError(e) = e {
+                        if let Some(s) = e.status {
+                            if s == 429 {
+                                println!("retry: {}", config.id);
+                                return true;
+                            }
+                        }
+                    }
+                }
+                false
+            },
+        )
+        .await;
         if let Err(e) = posted_id {
             let id = capture_anyhow(&e);
             println!("failed to post: {:?}, sentry: {}", e, id);
