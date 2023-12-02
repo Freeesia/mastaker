@@ -36,15 +36,15 @@ async fn feed_loop(config: &FeedConfig, tx: Sender<PostInfo>) -> anyhow::Result<
     match info.next_fetch {
         date if date == DateTimeUtc::UNIX_EPOCH => {
             let time = Duration::seconds(rand::thread_rng().gen_range(10..=60));
-            sleep(time, &format!("init rand wait: {}", config.id)).await;
+            sleep(&time, &format!("init rand wait: {}", config.id)).await;
         }
         next => {
             let now = Utc::now();
             if next > now {
-                sleep(next - now, &format!("init wait: {}", config.id)).await;
+                sleep(&(next - now), &format!("init wait: {}", config.id)).await;
             } else {
                 let time = Duration::seconds(rand::thread_rng().gen_range(10..=60));
-                sleep(time, &format!("init rand wait: {}", config.id)).await;
+                sleep(&time, &format!("init rand wait: {}", config.id)).await;
             }
         }
     }
@@ -52,7 +52,11 @@ async fn feed_loop(config: &FeedConfig, tx: Sender<PostInfo>) -> anyhow::Result<
         if let Err(err) = process_feed(&db, config, &tx).await {
             let id = capture_anyhow(&err);
             println!("failed to process feed: {:?}, sentry: {}", err, id);
-            sleep(Duration::minutes(20), &format!("faild wait: {}", config.id)).await;
+            sleep(
+                &Duration::minutes(20),
+                &format!("faild wait: {}", config.id),
+            )
+            .await;
         };
     }
 }
@@ -81,7 +85,7 @@ async fn process_feed(
         // 1番目の記事が存在しない場合は待機
         let d = info.update_next_fetch(&feed);
         info.save(db).await?;
-        sleep(d, &format!("not found: {}", config.id)).await;
+        sleep(&d, &format!("not found: {}", config.id)).await;
         return Ok(());
     };
 
@@ -97,7 +101,7 @@ async fn process_feed(
         PostItem::insert(db, &config.id, entry).await?;
         let d = info.update_next_fetch(&feed);
         info.save(db).await?;
-        sleep(d, &format!("first wait: {}", config.id)).await;
+        sleep(&d, &format!("first wait: {}", config.id)).await;
         return Ok(());
     };
 
@@ -110,6 +114,7 @@ async fn process_feed(
             let post = PostItem::insert(db, &config.id, entry).await?;
             tx.send(PostInfo(post.id, entry.clone(), config.clone()))
                 .await?;
+            sleep(&QUEUE_INTERVAL, &format!("queue wait : {}", config.id)).await;
         }
     } else {
         // 前回投稿日時以降の記事を投稿する
@@ -124,13 +129,13 @@ async fn process_feed(
             let post = PostItem::insert(db, &config.id, entry).await?;
             tx.send(PostInfo(post.id, entry.clone(), config.clone()))
                 .await?;
-            sleep(Duration::seconds(1), &format!("queue wait : {}", config.id)).await;
+            sleep(&QUEUE_INTERVAL, &format!("queue wait : {}", config.id)).await;
         }
     }
 
     let d = info.update_next_fetch(&feed);
     info.update(db).await?;
-    sleep(d, &format!("check wait: {}", config.id)).await;
+    sleep(&d, &format!("check wait: {}", config.id)).await;
     Ok(())
 }
 
@@ -171,7 +176,7 @@ async fn post_loop(mut rx: Receiver<PostInfo>, base_url: &String, is_dry_run: &b
             let id = capture_anyhow(&e);
             println!("failed to post: {:?}, sentry: {}", e, id);
             sleep(
-                Duration::seconds(10),
+                &Duration::seconds(10),
                 &format!("failed post: {}", config.id),
             )
             .await;
@@ -203,7 +208,7 @@ async fn post_loop(mut rx: Receiver<PostInfo>, base_url: &String, is_dry_run: &b
         } else {
             println!("failed to count queue");
         }
-        sleep(Duration::seconds(5), &format!("post wait: {}", config.id)).await;
+        sleep(&POST_INTERVAL, &format!("post wait: {}", config.id)).await;
     }
 }
 
