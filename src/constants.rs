@@ -22,3 +22,9 @@ pub static POST_INTERVAL: Lazy<Duration> = Lazy::new(|| {
             .unwrap(),
     )
 });
+pub static MAX_QUEUE: Lazy<usize> = Lazy::new(|| {
+    env::var("MAX_QUEUE")
+        .unwrap_or("1000".to_string())
+        .parse()
+        .unwrap()
+});
