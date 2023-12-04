@@ -265,7 +265,7 @@ async fn run() -> Result<(), Box<dyn std::error::Error>> {
     let is_dry_run = env::var(IS_DRY_RUN_ENV).is_ok();
     setup_tables(&db).await?;
 
-    let (tx, rx) = channel(1000);
+    let (tx, rx) = channel(*MAX_QUEUE);
 
     let tasks: Vec<_> = config
         .feeds
