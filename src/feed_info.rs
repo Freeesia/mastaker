@@ -105,6 +105,10 @@ impl ActiveModel {
             .into_iter()
             .filter(|d| *d > Duration::minutes(5))
             .collect();
+        // 1回も投稿がなければ、前回のチェック間隔から1.5倍の値を使用
+        if durations.is_empty() {
+            return duration * 3 / 2;
+        }
         let median = median(durations);
         let median6 = median / 6;
         if duration < median6 {
