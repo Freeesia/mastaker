@@ -155,7 +155,7 @@ async fn post_loop(mut rx: Receiver<PostInfo>, base_url: &String, is_dry_run: &b
             )
         });
         let posted_id = RetryIf::spawn(
-            FixedInterval::from_millis(1000).take(5),
+            FixedInterval::from_millis(5000).take(2),
             || async { post(&client, &config, &entry, is_dry_run).await },
             |e: &anyhow::Error| {
                 if let Some(e) = e.downcast_ref::<megalodon::error::Error>() {
