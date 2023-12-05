@@ -71,7 +71,7 @@ impl StringBuilderExt for string_builder::Builder {
 pub trait ItemExt {
     fn pub_date_utc(&self) -> Option<&DateTime<Utc>>;
     fn pub_date_utc_or<'a>(&'a self, or: &'a DateTime<Utc>) -> &'a DateTime<Utc>;
-    async fn to_status(&self, id: String, config: &Option<TagConfig>) -> anyhow::Result<String>;
+    async fn to_status(&self, id: String, config: &TagConfig) -> anyhow::Result<String>;
 }
 
 #[async_trait]
@@ -94,11 +94,13 @@ impl ItemExt for feed_rs::model::Entry {
         }
     }
 
-    async fn to_status(&self, id: String, config: &Option<TagConfig>) -> anyhow::Result<String> {
+    async fn to_status(&self, id: String, config: &TagConfig) -> anyhow::Result<String> {
         let mut b = string_builder::Builder::default();
         let mut title = None;
         if let Some(t) = &self.title {
-            let head = COMBINE_TAG_RE.replace_all(t.content.as_str(), "#$1").to_string();
+            let head = COMBINE_TAG_RE
+                .replace_all(t.content.as_str(), "#$1")
+                .to_string();
             b.append_with_line(head);
             title = Some(&t.content);
         }
@@ -113,60 +115,59 @@ impl ItemExt for feed_rs::model::Entry {
                     .map(|c| c.label.clone().unwrap_or(c.term.clone())),
             )
             .collect::<Vec<String>>();
-        if let Some(config) = config {
-            tags.extend(config.always.clone());
+        tags.extend(config.always.clone());
 
-            for link in &self.links {
-                let response = reqwest::get(&link.href).await?;
-                let contents = decode_text(response).await?;
-                let package = sxd_html::parse_html(&contents);
-                let doc = package.as_document();
-                if let Nodeset(nodes) = evaluate_xpath(&doc, "//meta[@name='keywords']/@content")? {
-                    for node in nodes {
-                        for keyword in node.string_value().split(',') {
-                            tags.push(keyword.trim().to_string());
-                        }
+        for link in &self.links {
+            let response = reqwest::get(&link.href).await?;
+            let contents = decode_text(response).await?;
+            let package = sxd_html::parse_html(&contents);
+            let doc = package.as_document();
+            if let Nodeset(nodes) = evaluate_xpath(&doc, "//meta[@name='keywords']/@content")? {
+                for node in nodes {
+                    for keyword in node.string_value().split(',') {
+                        tags.push(keyword.trim().to_string());
                     }
                 }
-                // xpathがない場合は無視
-                let Some(xpath) = &config.xpath else { continue };
-                let Ok(Nodeset(nodes)) = evaluate_xpath(&doc, xpath) else {
-                    // TODO: Sentryに送る
-                    continue;
-                };
-                for node in nodes {
-                    tags.push(node.string_value().trim().to_string());
-                }
             }
-
-            if !config.replace.is_empty() {
-                let replace = config
-                    .replace
-                    .iter()
-                    .filter_map(|i| Regex::new(i).ok())
-                    .collect::<Vec<Regex>>();
-                tags = tags
-                    .into_iter()
-                    .map(|t| {
-                        replace
-                            .iter()
-                            .fold(t, |t, r| r.replace_all(&t, "").to_string())
-                    })
-                    .collect::<Vec<String>>();
-            }
-
-            if !config.ignore.is_empty() {
-                let ignore = config
-                    .ignore
-                    .iter()
-                    .filter_map(|i| Regex::new(i).ok())
-                    .collect::<Vec<Regex>>();
-                tags = tags
-                    .into_iter()
-                    .filter(|t| !ignore.iter().any(|r| r.is_match(t)))
-                    .collect::<Vec<String>>();
+            // xpathがない場合は無視
+            let Some(xpath) = &config.xpath else { continue };
+            let Ok(Nodeset(nodes)) = evaluate_xpath(&doc, xpath) else {
+                // TODO: Sentryに送る
+                continue;
+            };
+            for node in nodes {
+                tags.push(node.string_value().trim().to_string());
             }
         }
+
+        if !config.replace.is_empty() {
+            let replace = config
+                .replace
+                .iter()
+                .filter_map(|i| Regex::new(i).ok())
+                .collect::<Vec<Regex>>();
+            tags = tags
+                .into_iter()
+                .map(|t| {
+                    replace
+                        .iter()
+                        .fold(t, |t, r| r.replace_all(&t, "").to_string())
+                })
+                .collect::<Vec<String>>();
+        }
+
+        if !config.ignore.is_empty() {
+            let ignore = config
+                .ignore
+                .iter()
+                .filter_map(|i| Regex::new(i).ok())
+                .collect::<Vec<Regex>>();
+            tags = tags
+                .into_iter()
+                .filter(|t| !ignore.iter().any(|r| r.is_match(t)))
+                .collect::<Vec<String>>();
+        }
+
         // 大文字小文字を区別しない重複排除
         let mut seen = HashSet::new();
         tags.retain(|e| seen.insert(e.to_uppercase()));

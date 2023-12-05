@@ -141,7 +141,12 @@ async fn process_feed(
 
 struct PostInfo(i32, Entry, FeedConfig);
 
-async fn post_loop(mut rx: Receiver<PostInfo>, base_url: &String, is_dry_run: &bool) {
+async fn post_loop(
+    mut rx: Receiver<PostInfo>,
+    base_url: &String,
+    tag: &Option<TagConfig>,
+    is_dry_run: &bool,
+) {
     let db = setup_connection().await.unwrap();
     let mut cache = HashMap::new();
     while let Some(PostInfo(id, entry, config)) = rx.recv().await {
@@ -156,7 +161,7 @@ async fn post_loop(mut rx: Receiver<PostInfo>, base_url: &String, is_dry_run: &b
         });
         let posted_id = RetryIf::spawn(
             FixedInterval::from_millis(5000).take(2),
-            || async { post(&client, &config, &entry, is_dry_run).await },
+            || async { post(&client, &config, &tag, &entry, is_dry_run).await },
             |e: &anyhow::Error| {
                 if let Some(e) = e.downcast_ref::<megalodon::error::Error>() {
                     if let megalodon::error::Error::OwnError(e) = e {
@@ -215,10 +220,24 @@ async fn post_loop(mut rx: Receiver<PostInfo>, base_url: &String, is_dry_run: &b
 async fn post(
     client: &Box<dyn Megalodon + Send + Sync>,
     config: &FeedConfig,
+    global_tag: &Option<TagConfig>,
     entry: &Entry,
     is_dry_run: &bool,
 ) -> anyhow::Result<String> {
-    let status = entry.to_status(config.id.clone(), &config.tag).await?;
+    let mut merged_tag = TagConfig::new();
+    if let Some(tag) = global_tag {
+        merged_tag.always.extend(tag.always.clone());
+        merged_tag.ignore.extend(tag.ignore.clone());
+        merged_tag.replace.extend(tag.replace.clone());
+        merged_tag.xpath = tag.xpath.clone();
+    }
+    if let Some(tag) = &config.tag {
+        merged_tag.always.extend(tag.always.clone());
+        merged_tag.ignore.extend(tag.ignore.clone());
+        merged_tag.replace.extend(tag.replace.clone());
+        merged_tag.xpath = tag.xpath.clone();
+    }
+    let status = entry.to_status(config.id.clone(), &merged_tag).await?;
     let now = Utc::now();
     let pud_date = entry.pub_date_utc_or(&now);
     println!(
@@ -274,7 +293,7 @@ async fn run() -> Result<(), Box<dyn std::error::Error>> {
         .collect();
 
     let task = tokio::spawn(async move {
-        post_loop(rx, &config.base_url, &is_dry_run).await;
+        post_loop(rx, &config.base_url, &config.tag, &is_dry_run).await;
     });
 
     _ = futures::future::join(futures::future::join_all(tasks), task).await;

@@ -3,6 +3,7 @@ use serde_derive::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Config {
     pub base_url: String,
+    pub tag: Option<TagConfig>,
     pub feeds: Vec<FeedConfig>,
 }
 
@@ -20,4 +21,15 @@ pub struct TagConfig {
     pub ignore: Vec<String>,
     pub replace: Vec<String>,
     pub xpath: Option<String>,
+}
+
+impl TagConfig {
+    pub fn new() -> Self {
+        Self {
+            always: vec![],
+            ignore: vec![],
+            replace: vec![],
+            xpath: None,
+        }
+    }
 }
