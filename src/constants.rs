@@ -28,3 +28,19 @@ pub static MAX_QUEUE: Lazy<usize> = Lazy::new(|| {
         .parse()
         .unwrap()
 });
+pub static MIN_WAIT: Lazy<Duration> = Lazy::new(|| {
+    Duration::minutes(
+        env::var("MIN_WAIT")
+            .unwrap_or("5".to_string())
+            .parse()
+            .unwrap(),
+    )
+});
+pub static MAX_WAIT: Lazy<Duration> = Lazy::new(|| {
+    Duration::minutes(
+        env::var("MAX_WAIT")
+            .unwrap_or("60".to_string())
+            .parse()
+            .unwrap(),
+    )
+});

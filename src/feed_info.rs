@@ -3,6 +3,7 @@ use feed_rs::model::Feed;
 use sea_orm::entity::prelude::*;
 use sea_orm::ActiveValue::*;
 
+use crate::constants::{MIN_WAIT, MAX_WAIT};
 use crate::ext_trait::ItemExt;
 
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel)]
@@ -38,8 +39,8 @@ impl ActiveModel {
             duration
         } else {
             let duration = Self::get_next_duration(feed, self.last_fetch.as_ref())
-                .max(Duration::minutes(5))
-                .min(Duration::minutes(feed.ttl.unwrap_or(60) as i64));
+                .max(*MIN_WAIT)
+                .min(*MAX_WAIT);
             self.last_fetch = Set(Utc::now());
             self.next_fetch = Set(*self.last_fetch.as_ref() + duration);
             duration
@@ -63,9 +64,9 @@ impl ActiveModel {
         if pubs.len() > 2 {
             let first = pubs.get(0).unwrap();
             let second = pubs.get(1).unwrap();
-            Duration::minutes(5).max(ttl.min(**second - **first) / 6)
+            MIN_WAIT.max(ttl.min(**second - **first) / 6)
         } else {
-            Duration::minutes(5).max(ttl / 6)
+            MIN_WAIT.max(ttl / 6)
         }
     }
 
