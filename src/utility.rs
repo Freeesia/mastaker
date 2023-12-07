@@ -6,8 +6,8 @@ pub async fn sleep(duration: &Duration, reason: &str) {
     #[cfg(feature = "skip_sleep")]
     tokio::time::sleep(
         match duration {
-            d if d > Duration::minutes(1) => Duration::seconds(10),
-            _ => duration,
+            d if d > &Duration::minutes(1) => Duration::seconds(10),
+            _ => *duration,
         }
         .to_std()
         .unwrap(),
