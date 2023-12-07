@@ -22,10 +22,11 @@ pub async fn setup_connection() -> Result<DatabaseConnection, DbErr> {
     Database::connect(database_url).await
 }
 
-pub async fn setup_tables(db: &DatabaseConnection) -> Result<(), DbErr> {
+pub async fn setup_tables() -> Result<(), DbErr> {
+    let db = setup_connection().await?;
     let backend = db.get_database_backend();
     let schema = Schema::new(backend);
-    let schema_manager = SchemaManager::new(db);
+    let schema_manager = SchemaManager::new(&db);
     schema_manager
         .create_table(
             schema

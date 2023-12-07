@@ -28,11 +28,13 @@ use setup::*;
 use utility::*;
 
 async fn feed_loop(config: &FeedConfig, tx: Sender<PostInfo>) -> anyhow::Result<()> {
-    let db = setup_connection().await?;
-    let info = FeedInfo::find_by_id(&config.id)
-        .one(&db)
-        .await?
-        .unwrap_or(feed_info::Model::new(config.id.clone()));
+    let info = {
+        let db = setup_connection().await?;
+        FeedInfo::find_by_id(&config.id)
+            .one(&db)
+            .await?
+            .unwrap_or(feed_info::Model::new(config.id.clone()))
+    };
     match info.next_fetch {
         date if date == DateTimeUtc::UNIX_EPOCH => {
             let time = Duration::seconds(rand::thread_rng().gen_range(10..=60));
@@ -49,7 +51,7 @@ async fn feed_loop(config: &FeedConfig, tx: Sender<PostInfo>) -> anyhow::Result<
         }
     }
     loop {
-        if let Err(err) = process_feed(&db, config, &tx).await {
+        if let Err(err) = process_feed(config, &tx).await {
             let id = capture_anyhow(&err);
             println!("failed to process feed: {:?}, sentry: {}", err, id);
             sleep(
@@ -61,17 +63,14 @@ async fn feed_loop(config: &FeedConfig, tx: Sender<PostInfo>) -> anyhow::Result<
     }
 }
 
-async fn process_feed(
-    db: &DatabaseConnection,
-    config: &FeedConfig,
-    tx: &Sender<PostInfo>,
-) -> anyhow::Result<()> {
+async fn process_feed(config: &FeedConfig, tx: &Sender<PostInfo>) -> anyhow::Result<()> {
     println!("check feed: {}", config.id);
-    let mut info = match FeedInfo::find_by_id(&config.id).one(db).await? {
+    let db = setup_connection().await?;
+    let mut info = match FeedInfo::find_by_id(&config.id).one(&db).await? {
         Some(info) => info.into_active_model(),
         None => {
             let info = feed_info::Model::new(config.id.clone()).into_active_model();
-            info.insert(db).await?.into_active_model()
+            info.insert(&db).await?.into_active_model()
         }
     };
     let content = reqwest::get(&config.url).await?.bytes().await?;
@@ -84,7 +83,7 @@ async fn process_feed(
     else {
         // 1番目の記事が存在しない場合は待機
         let d = info.update_next_fetch(&feed);
-        info.save(db).await?;
+        info.save(&db).await?;
         sleep(&d, &format!("not found: {}", config.id)).await;
         return Ok(());
     };
@@ -93,14 +92,14 @@ async fn process_feed(
     let last_post = PostItem::find()
         .filter(post_item::Column::Source.eq(&config.id))
         .order_by_desc(post_item::Column::PubDate)
-        .one(db)
+        .one(&db)
         .await?;
 
     // 初回は投稿せずに登録のみ
     let Some(last_post) = last_post else {
-        PostItem::insert(db, &config.id, entry).await?;
+        PostItem::insert(&db, &config.id, entry).await?;
         let d = info.update_next_fetch(&feed);
-        info.save(db).await?;
+        info.save(&db).await?;
         sleep(&d, &format!("first wait: {}", config.id)).await;
         return Ok(());
     };
@@ -111,7 +110,7 @@ async fn process_feed(
         let title = &entry.title.as_ref().unwrap().content;
         let link = &entry.links.get(0).unwrap().href;
         if last_post.title != *title || last_post.link != *link {
-            let post = PostItem::insert(db, &config.id, entry).await?;
+            let post = PostItem::insert(&db, &config.id, entry).await?;
             tx.send(PostInfo(post.id, entry.clone(), config.clone()))
                 .await?;
             sleep(&QUEUE_INTERVAL, &format!("queue wait : {}", config.id)).await;
@@ -126,7 +125,7 @@ async fn process_feed(
         // 公開日時でソートする
         entries.sort_by_key(|e| e.pub_date_utc().unwrap());
         for entry in entries {
-            let post = PostItem::insert(db, &config.id, entry).await?;
+            let post = PostItem::insert(&db, &config.id, entry).await?;
             tx.send(PostInfo(post.id, entry.clone(), config.clone()))
                 .await?;
             sleep(&QUEUE_INTERVAL, &format!("queue wait : {}", config.id)).await;
@@ -134,7 +133,8 @@ async fn process_feed(
     }
 
     let d = info.update_next_fetch(&feed);
-    info.update(db).await?;
+    info.update(&db).await?;
+    db.close().await?;
     sleep(&d, &format!("check wait: {}", config.id)).await;
     Ok(())
 }
@@ -280,9 +280,8 @@ fn main() {
 
 async fn run() -> Result<(), Box<dyn std::error::Error>> {
     let config = load_config()?;
-    let db = setup_connection().await?;
     let is_dry_run = env::var(IS_DRY_RUN_ENV).is_ok();
-    setup_tables(&db).await?;
+    setup_tables().await?;
 
     let (tx, rx) = channel(*MAX_QUEUE);
 
