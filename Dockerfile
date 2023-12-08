@@ -1,6 +1,14 @@
 # ベースイメージ
 FROM rust:bookworm AS chef
 RUN cargo install cargo-chef 
+RUN git clone https://github.com/rui314/mold.git \
+    && mkdir /mold/build \
+    && cd /mold/build \
+    && git checkout v2.4.0 \
+    && ../install-build-deps.sh \
+    && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=/usr/bin/c++ .. \
+    && cmake --build . -j $(nproc) \
+    && cmake --install .
 WORKDIR /usr/src/mastaker
 
 # 解析ステージ
