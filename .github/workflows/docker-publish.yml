@@ -34,3 +34,5 @@ jobs:
           org.opencontainers.image.source=https://github.com/${{ github.repository }}
         push: ${{ github.ref_name == 'master' }}
         tags: ghcr.io/${{ env.image_tag }}:${{ github.sha }},ghcr.io/${{ env.image_tag }}:dev
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
