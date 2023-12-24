@@ -44,3 +44,11 @@ pub static MAX_WAIT: Lazy<Duration> = Lazy::new(|| {
             .unwrap(),
     )
 });
+pub static CONFIG_INTERVAL: Lazy<Duration> = Lazy::new(|| {
+    Duration::seconds(
+        env::var("CONFIG_INTERVAL")
+            .unwrap_or("60".to_string())
+            .parse()
+            .unwrap(),
+    )
+});

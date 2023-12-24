@@ -17,7 +17,10 @@ use rand::Rng;
 use reqwest;
 use sea_orm::{prelude::DateTimeUtc, *};
 use sentry_anyhow::capture_anyhow;
-use std::{collections::HashMap, env};
+use std::{
+    collections::{HashMap, HashSet},
+    env,
+};
 use tokio::sync::mpsc::*;
 use tokio_retry::{strategy::FixedInterval, RetryIf};
 
@@ -261,6 +264,30 @@ async fn post(
     }
 }
 
+async fn config_reload_loop(tx: Sender<PostInfo>) {
+    let mut feeds = HashSet::new();
+    loop {
+        match load_config() {
+            Ok(config) => {
+                println!("config reloaded");
+                for feed in config.feeds {
+                    if !feeds.insert(feed.id.clone()) {
+                        continue;
+                    }
+                    let tx = tx.clone();
+                    tokio::spawn(async move {
+                        _ = feed_loop(&feed, tx).await;
+                    });
+                }
+            }
+            Err(e) => {
+                println!("failed to load config: {:?}", e);
+            }
+        }
+        sleep(&CONFIG_INTERVAL, "config wait").await;
+    }
+}
+
 fn main() {
     let _guard = sentry::init(sentry::ClientOptions {
         release: sentry::release_name!(),
@@ -285,16 +312,9 @@ async fn run() -> Result<(), Box<dyn std::error::Error>> {
 
     let (tx, rx) = channel(*MAX_QUEUE);
 
-    let tasks: Vec<_> = config
-        .feeds
-        .iter()
-        .map(|rss| feed_loop(rss, tx.clone()))
-        .collect();
-
-    let task = tokio::spawn(async move {
-        post_loop(rx, &config.base_url, &config.tag, &is_dry_run).await;
-    });
-
-    _ = futures::future::join(futures::future::join_all(tasks), task).await;
+    _ = tokio::join!(
+        post_loop(rx, &config.base_url, &config.tag, &is_dry_run),
+        config_reload_loop(tx)
+    );
     Ok(())
 }
