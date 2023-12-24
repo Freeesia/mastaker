@@ -82,6 +82,7 @@ async fn process_feed(config: &FeedConfig, tx: &Sender<PostInfo>) -> anyhow::Res
     let Some(entry) = feed
         .entries
         .iter()
+        .filter(|e| e.title.is_some() && e.links.len() > 0)
         .max_by_key(|e| e.pub_date_utc().unwrap())
     else {
         // 1番目の記事が存在しない場合は待機
