@@ -78,6 +78,12 @@ impl ActiveModel {
     fn get_next_duration(feed: &Feed, last_fetch: &DateTimeUtc) -> Duration {
         // 前回のチェックから現在時刻の間隔の取得
         let duration = Utc::now() - *last_fetch;
+
+        // そもそも1回も投稿がなければ、前回のチェック間隔から1.5倍の値を使用
+        if feed.entries.is_empty() {
+            return duration * 3 / 2;
+        }
+
         // 前回のチェックからの投稿を取得
         let mut last_posted: Vec<_> = feed
             .entries
