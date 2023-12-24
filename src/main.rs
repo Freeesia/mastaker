@@ -30,15 +30,12 @@ use schema::*;
 use setup::*;
 use utility::*;
 
-async fn feed_loop(config: &FeedConfig, tx: Sender<PostInfo>) -> anyhow::Result<()> {
-    let info = {
-        let db = setup_connection().await?;
-        FeedInfo::find_by_id(&config.id)
-            .one(&db)
-            .await?
-            .unwrap_or(feed_info::Model::new(config.id.clone()))
-    };
-    match info.next_fetch {
+async fn feed_loop(
+    config: &FeedConfig,
+    next_fetch: DateTimeUtc,
+    tx: Sender<PostInfo>,
+) -> anyhow::Result<()> {
+    match next_fetch {
         date if date == DateTimeUtc::UNIX_EPOCH => {
             let time = Duration::seconds(rand::thread_rng().gen_range(10..=60));
             sleep(&time, &format!("init rand wait: {}", config.id)).await;
@@ -265,7 +262,7 @@ async fn post(
     }
 }
 
-async fn config_reload_loop(tx: Sender<PostInfo>) {
+async fn config_reload_loop(tx: Sender<PostInfo>) -> anyhow::Result<()> {
     let mut feeds = HashSet::new();
     loop {
         match load_config() {
@@ -275,9 +272,14 @@ async fn config_reload_loop(tx: Sender<PostInfo>) {
                     if !feeds.insert(feed.id.clone()) {
                         continue;
                     }
+                    let db = setup_connection().await?;
+                    let info = FeedInfo::find_by_id(&feed.id)
+                        .one(&db)
+                        .await?
+                        .unwrap_or(feed_info::Model::new(feed.id.clone()));
                     let tx = tx.clone();
                     tokio::spawn(async move {
-                        _ = feed_loop(&feed, tx).await;
+                        _ = feed_loop(&feed, info.next_fetch, tx).await;
                     });
                 }
             }
