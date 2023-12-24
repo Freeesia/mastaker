@@ -2,7 +2,7 @@ use chrono::Duration;
 use once_cell::sync::Lazy;
 use std::env;
 
-pub const DATABASE_URL_ENV: &str = "DATABASE_URL";
+const DATABASE_URL_ENV: &str = "DATABASE_URL";
 pub const FEED_CONFIG_PATH_ENV: &str = "FEED_CONFIG_PATH";
 pub const IS_DRY_RUN_ENV: &str = "IS_DRY_RUN";
 
@@ -52,3 +52,5 @@ pub static CONFIG_INTERVAL: Lazy<Duration> = Lazy::new(|| {
             .unwrap(),
     )
 });
+pub static DATABASE_URL: Lazy<String> =
+    Lazy::new(|| env::var(DATABASE_URL_ENV).expect(&format!("{} must be set", DATABASE_URL_ENV)));

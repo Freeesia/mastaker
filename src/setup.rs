@@ -17,9 +17,20 @@ pub fn load_config() -> Result<Config, Box<dyn std::error::Error>> {
 }
 
 pub async fn setup_connection() -> Result<DatabaseConnection, DbErr> {
-    let database_url =
-        env::var(DATABASE_URL_ENV).expect(&format!("{} must be set", DATABASE_URL_ENV));
-    Database::connect(database_url).await
+    let mut opt = ConnectOptions::new(DATABASE_URL.clone());
+    opt.connect_timeout(std::time::Duration::from_secs(25))
+        .acquire_timeout(std::time::Duration::from_secs(60));
+    loop {
+        match Database::connect(opt.clone()).await {
+            Ok(db) => {
+                break Ok(db);
+            }
+            Err(err) => {
+                println!("Failed to connect to database: {}, Retrying in 5 seconds", err);
+                tokio::time::sleep(tokio::time::Duration::from_secs(5)).await;
+            }
+        }
+    }
 }
 
 pub async fn setup_tables() -> Result<(), DbErr> {
