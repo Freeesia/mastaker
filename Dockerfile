@@ -26,7 +26,7 @@ RUN cargo chef cook --release --recipe-path recipe.json
 # Build application
 COPY . .
 ARG VERSION
-RUN cargo build --release
+RUN cargo build --release -vv
 
 # 実行ステージ
 FROM debian:bookworm-slim

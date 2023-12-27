@@ -35,10 +35,11 @@ jobs:
       with:
         context: .
         build-args: |
-          Repository=${{ github.repository }}
-          Version=${{ env.GitVersion_InformationalVersion }}
+          VERSION=${{ env.GitVersion_InformationalVersion }}
         labels: |
           org.opencontainers.image.source=https://github.com/${{ github.repository }}
+          org.opencontainers.image.revision=${{ github.sha }}
+          org.opencontainers.image.version=${{ env.GitVersion_InformationalVersion }}
         push: ${{ github.ref_name == 'master' }}
         tags: ghcr.io/${{ env.image_tag }}:${{ github.sha }},ghcr.io/${{ env.image_tag }}:dev
         cache-from: type=gha
