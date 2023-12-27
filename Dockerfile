@@ -25,6 +25,7 @@ COPY --from=planner /usr/src/mastaker/recipe.json recipe.json
 RUN cargo chef cook --release --recipe-path recipe.json
 # Build application
 COPY . .
+ARG VERSION
 RUN cargo build --release
 
 # 実行ステージ

@@ -1,0 +1,2 @@
+mode: Mainline
+assembly-informational-format: '{FullSemVer}+{ShortSha}'

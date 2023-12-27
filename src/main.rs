@@ -299,6 +299,10 @@ fn main() {
         attach_stacktrace: true,
         ..Default::default()
     });
+
+    if let Some(release) = sentry::release_name!() {
+        println!("{}", release);
+    }
     // sentryを動かすために必要
     tokio::runtime::Builder::new_multi_thread()
         .enable_all()
