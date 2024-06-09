@@ -74,7 +74,11 @@ async fn process_feed(config: &FeedConfig, tx: &Sender<PostInfo>) -> anyhow::Res
         }
     };
     let content = reqwest::get(&config.url).await?.bytes().await?;
-    let feed = FeedParser::parse_with_uri(content.as_ref(), Some(&config.url))?;
+    let feed = FeedParser::Builder::new()
+        .base_uri(Some(&config.url))
+        .build()
+        .parse(content.as_ref())?;
+
     // 最新の投稿を取得
     let Some(entry) = feed
         .entries
