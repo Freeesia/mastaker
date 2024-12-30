@@ -499,6 +499,40 @@ dependencies = [
 ]
 
 [[package]]
+name = "darling"
+version = "0.20.10"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6f63b86c8a8826a49b8c21f08a2d07338eec8d900540f8630dc76284be802989"
+dependencies = [
+ "darling_core",
+ "darling_macro",
+]
+
+[[package]]
+name = "darling_core"
+version = "0.20.10"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "95133861a8032aaea082871032f5815eb9e98cef03fa916ab4500513994df9e5"
+dependencies = [
+ "fnv",
+ "ident_case",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.87",
+]
+
+[[package]]
+name = "darling_macro"
+version = "0.20.10"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d336a2a514f6ccccaa3e09b02d41d35330c07ddf03a62165fcec10bb561c7806"
+dependencies = [
+ "darling_core",
+ "quote",
+ "syn 2.0.87",
+]
+
+[[package]]
 name = "data-encoding"
 version = "2.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1331,6 +1365,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "ident_case"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b9e0384b61958566e926dc50660321d12159025e767c18e043daf26b70104c39"
+
+[[package]]
 name = "idna"
 version = "1.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1383,6 +1423,15 @@ name = "is_terminal_polyfill"
 version = "1.70.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7943c866cc5cd64cbc25b2e01621d07fa8eb2a1a23160ee81ce38704e97b8ecf"
+
+[[package]]
+name = "itertools"
+version = "0.12.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ba291022dbbd398a455acf126c1e341954079855bc60dfdda641363bd6922569"
+dependencies = [
+ "either",
+]
 
 [[package]]
 name = "itoa"
@@ -1496,7 +1545,7 @@ dependencies = [
  "rand",
  "regex",
  "reqwest 0.12.11",
- "sea-orm",
+ "sea-orm 0.12.15",
  "sea-orm-migration",
  "sentry",
  "sentry-anyhow",
@@ -1816,7 +1865,18 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e2ba07320d39dfea882faa70554b4bd342a5f273ed59ba7c1c6b4c840492c954"
 dependencies = [
  "aliasable",
- "ouroboros_macro",
+ "ouroboros_macro 0.17.2",
+ "static_assertions",
+]
+
+[[package]]
+name = "ouroboros"
+version = "0.18.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "944fa20996a25aded6b4795c6d63f10014a7a83f8be9828a11860b08c5fc4a67"
+dependencies = [
+ "aliasable",
+ "ouroboros_macro 0.18.4",
  "static_assertions",
 ]
 
@@ -1829,6 +1889,20 @@ dependencies = [
  "heck 0.4.1",
  "proc-macro-error",
  "proc-macro2",
+ "quote",
+ "syn 2.0.87",
+]
+
+[[package]]
+name = "ouroboros_macro"
+version = "0.18.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "39b0deead1528fd0e5947a8546a9642a9777c25f6e1e26f34c97b204bbb465bd"
+dependencies = [
+ "heck 0.4.1",
+ "itertools",
+ "proc-macro2",
+ "proc-macro2-diagnostics",
  "quote",
  "syn 2.0.87",
 ]
@@ -2082,6 +2156,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5e719e8df665df0d1c8fbfd238015744736151d4445ec0836b8e628aae103b77"
 dependencies = [
  "unicode-ident",
+]
+
+[[package]]
+name = "proc-macro2-diagnostics"
+version = "0.10.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "af066a9c399a26e020ada66a034357a868728e72cd426f3adcd35f80d88d88c8"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.87",
+ "version_check",
+ "yansi",
 ]
 
 [[package]]
@@ -2624,15 +2711,15 @@ dependencies = [
  "chrono",
  "futures",
  "log",
- "ouroboros",
+ "ouroboros 0.17.2",
  "rust_decimal",
- "sea-orm-macros",
- "sea-query",
+ "sea-orm-macros 0.12.15",
+ "sea-query 0.30.7",
  "sea-query-binder",
  "serde",
  "serde_json",
  "sqlx",
- "strum",
+ "strum 0.25.0",
  "thiserror",
  "time",
  "tracing",
@@ -2641,10 +2728,30 @@ dependencies = [
 ]
 
 [[package]]
-name = "sea-orm-cli"
-version = "0.12.15"
+name = "sea-orm"
+version = "1.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "620bc560062ae251b1366bde43b3f1508445cab5c2c8cbdb397034638ab1b357"
+checksum = "0dbcf83248860dc632c46c7e81a221e041b50d0006191756cb001d9e8afc60a9"
+dependencies = [
+ "async-stream",
+ "async-trait",
+ "futures",
+ "log",
+ "ouroboros 0.18.4",
+ "sea-orm-macros 1.1.3",
+ "sea-query 0.32.1",
+ "serde",
+ "strum 0.26.3",
+ "thiserror",
+ "tracing",
+ "url",
+]
+
+[[package]]
+name = "sea-orm-cli"
+version = "1.1.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7a8dbef29c7e534a8e9afb49abfa946c7a9df3d85f610dfed9140215ff8bff17"
 dependencies = [
  "chrono",
  "clap",
@@ -2672,16 +2779,30 @@ dependencies = [
 ]
 
 [[package]]
-name = "sea-orm-migration"
-version = "0.12.15"
+name = "sea-orm-macros"
+version = "1.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ee8269bc6ff71afd6b78aa4333ac237a69eebd2cdb439036291e64fb4b8db23c"
+checksum = "49ce6f08134f3681b1ca92185b96fac898f26d9b4f5538d13f7032ef243d14b2"
+dependencies = [
+ "heck 0.4.1",
+ "proc-macro2",
+ "quote",
+ "sea-bae",
+ "syn 2.0.87",
+ "unicode-ident",
+]
+
+[[package]]
+name = "sea-orm-migration"
+version = "1.1.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2e53f46fe9874161ba57b15ff45d2589d754d7cbbbaab9470cb79cbada149ca7"
 dependencies = [
  "async-trait",
  "clap",
  "dotenvy",
  "futures",
- "sea-orm",
+ "sea-orm 1.1.3",
  "sea-orm-cli",
  "sea-schema",
  "tracing",
@@ -2700,10 +2821,20 @@ dependencies = [
  "inherent",
  "ordered-float",
  "rust_decimal",
- "sea-query-derive",
  "serde_json",
  "time",
  "uuid",
+]
+
+[[package]]
+name = "sea-query"
+version = "0.32.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "085e94f7d7271c0393ac2d164a39994b1dff1b06bc40cd9a0da04f3d672b0fee"
+dependencies = [
+ "inherent",
+ "ordered-float",
+ "sea-query-derive",
 ]
 
 [[package]]
@@ -2715,7 +2846,7 @@ dependencies = [
  "bigdecimal",
  "chrono",
  "rust_decimal",
- "sea-query",
+ "sea-query 0.30.7",
  "serde_json",
  "sqlx",
  "time",
@@ -2724,10 +2855,11 @@ dependencies = [
 
 [[package]]
 name = "sea-query-derive"
-version = "0.4.1"
+version = "0.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "25a82fcb49253abcb45cdcb2adf92956060ec0928635eb21b4f7a6d8f25ab0bc"
+checksum = "9834af2c4bd8c5162f00c89f1701fb6886119a88062cf76fe842ea9e232b9839"
 dependencies = [
+ "darling",
  "heck 0.4.1",
  "proc-macro2",
  "quote",
@@ -2737,25 +2869,25 @@ dependencies = [
 
 [[package]]
 name = "sea-schema"
-version = "0.14.2"
+version = "0.16.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "30d148608012d25222442d1ebbfafd1228dbc5221baf4ec35596494e27a2394e"
+checksum = "0ef5dd7848c993f3789d09a2616484c72c9330cae2b048df59d8c9b8c0343e95"
 dependencies = [
  "futures",
- "sea-query",
+ "sea-query 0.32.1",
  "sea-schema-derive",
 ]
 
 [[package]]
 name = "sea-schema-derive"
-version = "0.2.0"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c6f686050f76bffc4f635cda8aea6df5548666b830b52387e8bc7de11056d11e"
+checksum = "debdc8729c37fdbf88472f97fd470393089f997a909e535ff67c544d18cfccf0"
 dependencies = [
  "heck 0.4.1",
  "proc-macro2",
  "quote",
- "syn 1.0.109",
+ "syn 2.0.87",
 ]
 
 [[package]]
@@ -3387,6 +3519,12 @@ name = "strum"
 version = "0.25.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "290d54ea6f91c969195bdbcd7442c8c2a2ba87da8bf60a7ee86a235d4bc1e125"
+
+[[package]]
+name = "strum"
+version = "0.26.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8fec0f0aef304996cf250b31b5a10dee7980c85da9d759361292b8bca5a18f06"
 
 [[package]]
 name = "subtle"
@@ -4431,6 +4569,12 @@ checksum = "05f360fc0b24296329c78fda852a1e9ae82de9cf7b27dae4b7f62f118f77b9ed"
 dependencies = [
  "tap",
 ]
+
+[[package]]
+name = "yansi"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cfe53a6657fd280eaa890a3bc59152892ffa3e30101319d168b781ed6529b049"
 
 [[package]]
 name = "yoke"
