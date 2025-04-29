@@ -21,6 +21,7 @@ pub struct TagConfig {
     pub ignore: Vec<String>,
     pub replace: Vec<String>,
     pub xpath: Option<String>,
+    pub keywords: Option<bool>,
 }
 
 impl TagConfig {
@@ -30,6 +31,7 @@ impl TagConfig {
             ignore: vec![],
             replace: vec![],
             xpath: None,
+            keywords: None,
         }
     }
 }

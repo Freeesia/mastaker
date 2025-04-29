@@ -122,13 +122,18 @@ impl ItemExt for feed_rs::model::Entry {
             let contents = decode_text(response).await?;
             let package = sxd_html::parse_html(&contents);
             let doc = package.as_document();
-            if let Nodeset(nodes) = evaluate_xpath(&doc, "//meta[@name='keywords']/@content")? {
-                for node in nodes {
-                    for keyword in node.string_value().split(',') {
-                        tags.push(keyword.trim().to_string());
+
+            // keywordsがfalseに設定されている場合はメタキーワードを抽出しない
+            if config.keywords.unwrap_or(true) {
+                if let Nodeset(nodes) = evaluate_xpath(&doc, "//meta[@name='keywords']/@content")? {
+                    for node in nodes {
+                        for keyword in node.string_value().split(',') {
+                            tags.push(keyword.trim().to_string());
+                        }
                     }
                 }
             }
+
             // xpathがない場合は無視
             let Some(xpath) = &config.xpath else { continue };
             let Ok(Nodeset(nodes)) = evaluate_xpath(&doc, xpath) else {
