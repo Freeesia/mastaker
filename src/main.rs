@@ -235,12 +235,14 @@ async fn post(
         merged_tag.ignore.extend(tag.ignore.clone());
         merged_tag.replace.extend(tag.replace.clone());
         merged_tag.xpath = tag.xpath.clone();
+        merged_tag.keywords = tag.keywords.clone();
     }
     if let Some(tag) = &config.tag {
         merged_tag.always.extend(tag.always.clone());
         merged_tag.ignore.extend(tag.ignore.clone());
         merged_tag.replace.extend(tag.replace.clone());
         merged_tag.xpath = tag.xpath.clone();
+        merged_tag.keywords = tag.keywords.clone();
     }
     let status = entry.to_status(config.id.clone(), &merged_tag).await?;
     let now = Utc::now();
