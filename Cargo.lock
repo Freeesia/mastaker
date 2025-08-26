@@ -1750,7 +1750,7 @@ dependencies = [
  "once_cell",
  "rand 0.9.2",
  "regex",
- "reqwest 0.12.20",
+ "reqwest 0.12.23",
  "sea-orm",
  "sea-orm-migration",
  "sentry",
@@ -1806,7 +1806,7 @@ dependencies = [
  "oauth2",
  "rand 0.8.5",
  "regex",
- "reqwest 0.12.20",
+ "reqwest 0.12.23",
  "serde",
  "serde_json",
  "sha1",
@@ -2610,9 +2610,9 @@ dependencies = [
 
 [[package]]
 name = "reqwest"
-version = "0.12.20"
+version = "0.12.23"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "eabf4c97d9130e2bf606614eb937e86edac8292eaa6f422f995d7e8de1eb1813"
+checksum = "d429f34c8092b2d42c7c93cec323bb4adeb7c67698f70839adec842ec10c7ceb"
 dependencies = [
  "base64 0.22.1",
  "bytes",
@@ -3097,7 +3097,7 @@ checksum = "a505499b38861edd82b5a688fa06ba4ba5875bb832adeeeba22b7b23fc4bc39a"
 dependencies = [
  "httpdate",
  "native-tls",
- "reqwest 0.12.20",
+ "reqwest 0.12.23",
  "sentry-actix",
  "sentry-backtrace 0.38.1",
  "sentry-contexts",
