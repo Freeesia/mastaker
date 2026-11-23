@@ -17,10 +17,10 @@ jobs:
       with:
         fetch-depth: 0
     - uses: docker/setup-buildx-action@v4
-    - uses: gittools/actions/gitversion/setup@v3
+    - uses: gittools/actions/gitversion/setup@v5
       with:
         versionSpec: '5.x'
-    - uses: gittools/actions/gitversion/execute@v3
+    - uses: gittools/actions/gitversion/execute@v5
     - run: |
         IMAGE_ID=${{ github.repository }}
         IMAGE_ID=${IMAGE_ID,,}
